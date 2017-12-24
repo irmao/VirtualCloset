@@ -1,0 +1,30 @@
+<div ng-init="ctrl.init()">
+    <h1>Meu guarda-roupa</h1>
+    
+    <form class="form-control" name="form" novalidate>
+        <input type="text" ng-model="ctrl.clothing.name" 
+            class="form-group form-control col-12 required" 
+            placeholder="Nome"
+            required/>
+        
+        <select class="form-control form-group col-12" 
+            ng-model="ctrl.clothing.fancy"
+            ng-options="opt.value as opt.label for opt in ctrl.FANCY_OPTIONS">
+        </select>
+        
+        <select class="form-control col-12 form-group " 
+            ng-model="ctrl.clothing.sector"
+            ng-options="sector as sector.name for sector in ctrl.sectors">
+        </select>
+        
+        <button class="btn btn-primary form-group" 
+            ng-click="ctrl.addClothing()"
+            ng-disabled="!form.$valid">Adicionar</button> 
+    </form>
+    
+    <!-- SHOW clothes section -->
+    <div ng-class="{'card-fancy': clothing.fancy, 'card': !clothing.fancy}" ng-repeat="clothing in ctrl.clothes | orderBy: 'sector.id' : true">
+      <h4 class="card-title">{{::clothing.name}}</h4>
+        {{::clothing.sector.name}}
+    </div>    
+</div>

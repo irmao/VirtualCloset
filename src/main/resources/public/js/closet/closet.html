@@ -1,0 +1,32 @@
+<div ng-init="ctrl.init()" class="row">
+    <div class="col-12">
+        <h1>MEUS LOOKS</h1>
+    </div>
+    
+    <!-- mannequin -->
+    <div class="col-6 mannequin">
+    <!--  -->
+        <div ng-repeat="bodyPosition in ctrl.BODY_POSITIONS"
+            class="form-control mannequin-body mannequin-{{bodyPosition.name}}" 
+            ng-class="{'mannequin-body-drop-allowed' : bodyPosition.allowsDrop}"> 
+        </div>
+    </div>
+    
+    <!-- list of clothes -->
+    <div class="col-6 mannequin-sidebar">
+	    <div ng-repeat="sector in ctrl.sectors">
+            <h4  ng-if="ctrl.clothes[sector.id].length > 0">{{::sector.name}}</h4>
+            <div ng-if="ctrl.clothes[sector.id].length > 0" 
+                ng-repeat="clothing in ctrl.clothes[sector.id] | orderBy: 'clothing.name' : false"  
+                class="form-control form-group"
+                ng-drag="true" 
+                ng-drag-data="clothing"
+                ng-drag-success="ctrl.onDragComplete($data,$event)"
+                ng-drag-start="ctrl.onDragStart($data,$event)"
+                ng-drag-stop="ctrl.onDragStop($data,$event)"
+                ng-center-anchor="true">
+                {{::clothing.name}}
+            </div>
+        </div>
+    </div>
+</div>

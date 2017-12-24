@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app="virtualcloset">
+  
+  <head>  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <!-- Bootstrap required scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    
+    <!-- Angular JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+    
+    <!-- Angular Busy -->
+    <script src="lib/angular-busy/4.1.4/angular-busy.js"></script>
+    <link rel="stylesheet" href="lib/angular-busy/4.1.4/angular-busy.css"/>
+    
+    <!-- Angular UI Router -->
+    <script src="https://unpkg.com/@uirouter/angularjs@1.0.11/release/angular-ui-router.min.js"></script>
+    
+    <!-- isteven multi select -->
+    <link rel="stylesheet" href="lib/isteven-multi-select/4.0.0/isteven-multi-select.css">
+    <script src="lib/isteven-multi-select/4.0.0/isteven-multi-select.js"></script>
+    
+    <!-- toaster -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/2.2.0/toaster.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/2.2.0/toaster.min.js"></script>
+    
+    <!-- ngDrawable -->
+    <script src="lib/ngDraggable/ngDraggable.js"></script>
+    
+    <!-- Application scripts -->
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/app.route.js"></script>
+    <script type="text/javascript" src="js/home/HomeController.js"></script>
+    <script type="text/javascript" src="js/clothes/ClothesController.js"></script>
+    <script type="text/javascript" src="js/clothes/ClothesService.js"></script>
+    <script type="text/javascript" src="js/closet/ClosetController.js"></script>
+    <script type="text/javascript" src="js/closet/ClosetService.js"></script>
+    <script type="text/javascript" src="js/shared/controller/BaseController.js"></script>
+    <script type="text/javascript" src="js/shared/service/RequestService.js"></script>
+    <script type="text/javascript" src="js/shared/service/BaseService.js"></script>
+    <script type="text/javascript" src="js/shared/service/SectorService.js"></script>
+    
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles/application.css">
+  </head>
+  
+  <body ng-controller="BaseController as baseCtrl" cg-busy="baseCtrl.getPromise()">
+    <toaster-container toaster-options="{'time-out': 1000}"></toaster-container>
+    <div ui-view class="col-sm-12"></div>
+  </body>
+</html>
