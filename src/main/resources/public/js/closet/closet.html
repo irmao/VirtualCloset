@@ -4,7 +4,7 @@
     </div>
     
     <!-- mannequin -->
-    <div class="col-6 mannequin">
+    <div class="col-6 mannequin" style="z-index: -1;">
         <div ng-repeat="bodyPosition in ctrl.BODY_POSITIONS"
             class="form-control mannequin-body mannequin-{{bodyPosition.name}}" 
             ng-class="{'mannequin-body-drop-allowed' : bodyPosition.allowsDrop}"
@@ -15,6 +15,10 @@
                 {{clothing.name}}
             </div>
         </div>
+    </div>
+    
+    <div ng-drag-clone class="form-control form-group">
+        {{ctrl.clonedData.name}}
     </div>
     
     <!-- list of clothes -->

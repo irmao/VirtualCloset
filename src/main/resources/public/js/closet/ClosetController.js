@@ -8,14 +8,15 @@ function ClosetController(ClosetService, SectorService, ClothesService) {
 	var self = this;
 	
 	self.BODY_POSITIONS = [
-		{name: 'HEAD', allowsDrop: false, clothes: []}, 
-		{name: 'TOP', allowsDrop: false, clothes: []},
-		{name: 'BOTTOM', allowsDrop: false, clothes: []},
-		{name: 'FOOT', allowsDrop: false, clothes: []}
+		{name: 'HEAD', clothes: []}, 
+		{name: 'TOP', clothes: []},
+		{name: 'BOTTOM', clothes: []},
+		{name: 'FOOT', clothes: []}
 	];
 	
 	self.init = function() {
 		self.loadSectors();
+		self.clearDropAllowed();
 	}
 	
 	self.loadSectors = function() {
@@ -46,6 +47,7 @@ function ClosetController(ClosetService, SectorService, ClothesService) {
 	
 	self.onDragStart = function(clothing, evt) {
 		self.allowDropPositions(clothing.sector.bodyPositions);
+		self.clonedData = clothing;
 	}
 	
 	self.onDragStop = function(data, evt) {
@@ -67,5 +69,9 @@ function ClosetController(ClosetService, SectorService, ClothesService) {
 		self.BODY_POSITIONS.forEach((b) => {
 			b.allowsDrop = false;
 		});
+		
+		self.clonedData = {
+			name: ''
+		};
 	}
 }
