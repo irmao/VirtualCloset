@@ -5,10 +5,15 @@
     
     <!-- mannequin -->
     <div class="col-6 mannequin">
-    <!--  -->
         <div ng-repeat="bodyPosition in ctrl.BODY_POSITIONS"
             class="form-control mannequin-body mannequin-{{bodyPosition.name}}" 
-            ng-class="{'mannequin-body-drop-allowed' : bodyPosition.allowsDrop}"> 
+            ng-class="{'mannequin-body-drop-allowed' : bodyPosition.allowsDrop}"
+            ng-drop="true"
+            ng-drop-success="ctrl.onDropComplete(bodyPosition,$data,$event)"> 
+            
+            <div ng-repeat="clothing in bodyPosition.clothes track by $index">
+                {{clothing.name}}
+            </div>
         </div>
     </div>
     
