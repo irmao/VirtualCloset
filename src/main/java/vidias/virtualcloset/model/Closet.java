@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 /*
  * travel cases
  * saved looks
@@ -29,7 +31,7 @@ import javax.persistence.Table;
 public class Closet {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VC_CLOSET_SEQ")
-    @SequenceGenerator(sequenceName = "VC_CLOSET_SEQ", name = "VC_CLOSET_SEQ", allocationSize = 1)
+    @SequenceGenerator(sequenceName = "VC_CLOSET_SEQ", name = "VC_CLOSET_SEQ")
     private Long id;
 
     @Column
@@ -42,6 +44,7 @@ public class Closet {
     private Date endDate;
 
     @Column
+    @Type(type = "numeric_boolean")
     private Boolean bodyPositionOverlap;
 
     @JoinTable(name = "VC_CLOSET_CLOTHING", joinColumns = @JoinColumn(name = "CLOSET_ID", referencedColumnName = "ID"))

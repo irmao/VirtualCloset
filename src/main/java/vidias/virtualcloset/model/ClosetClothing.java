@@ -24,7 +24,7 @@ import javax.persistence.Table;
 public class ClosetClothing {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VC_CLOSET_CLOTHING_SEQ")
-    @SequenceGenerator(sequenceName = "VC_CLOSET_CLOTHING_SEQ", name = "VC_CLOSET_CLOTHING_SEQ", allocationSize = 1)
+    @SequenceGenerator(sequenceName = "VC_CLOSET_CLOTHING_SEQ", name = "VC_CLOSET_CLOTHING_SEQ")
     private Long id;
 
     @ManyToOne(cascade = CascadeType.DETACH)

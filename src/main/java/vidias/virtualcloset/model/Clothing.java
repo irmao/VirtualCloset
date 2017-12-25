@@ -14,21 +14,24 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "VC_CLOTHING")
 public class Clothing {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VC_CLOTHING_SEQ")
-    @SequenceGenerator(sequenceName = "VC_CLOTHING_SEQ", name = "VC_CLOTHING_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "VC_CLOTHING_SEQ", sequenceName = "VC_CLOTHING_SEQ")
     private Long id;
 
     @Column
     private String name;
 
     @Column
-    private byte[] picture;
+    private String pictureUrl;
 
     @Column
+    @Type(type = "numeric_boolean")
     private Boolean fancy;
 
     @Column
@@ -64,12 +67,12 @@ public class Clothing {
         this.name = name;
     }
 
-    public byte[] getPicture() {
-        return picture;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     public Boolean getFancy() {
