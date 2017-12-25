@@ -1,3 +1,7 @@
+body {
+	font-family: Helvetica Neue; 
+}
+
 .card-fancy {
   -webkit-box-flex: 1;
   -webkit-flex: 1 1 auto;
@@ -45,8 +49,6 @@
   font-size: 1rem;
   line-height: 1.5;
   color: #495057;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
@@ -75,16 +77,15 @@
 }
 
 .mannequin-HEAD {
-  margin-top: 30px;
-  height: 60px;
+  height: 50px;
 }
 
 .mannequin-TOP {
-  height: 70px;
+  height: 100px;
 }
 
 .mannequin-BOTTOM {
-  height: 180px;
+  height: 200px;
 }
 
 .mannequin-FOOT {

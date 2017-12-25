@@ -37,8 +37,6 @@ function ClosetController(ClosetService, SectorService, ClothesService) {
 	}
 	
 	self.onDropComplete = function(bodyPosition, clothing, evt) {
-		console.log(bodyPosition,clothing,evt);
-		
 		if (clothing.sector.bodyPositions.indexOf(bodyPosition.name) >= 0) {
 			bodyPosition.clothes.push(clothing);
 		}
@@ -64,6 +62,11 @@ function ClosetController(ClosetService, SectorService, ClothesService) {
 		});
 	}
 	
+	self.removeClothing = function() {
+		self.BODY_POSITIONS.forEach((b) => {
+			b.clothes = [];
+		});
+	}
 	
 	self.clearDropAllowed = function() {
 		self.BODY_POSITIONS.forEach((b) => {

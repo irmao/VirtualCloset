@@ -1,5 +1,5 @@
 <div ng-init="ctrl.init()">
-    <h1>Meu guarda-roupa</h1>
+    <h1>MEU GUARDA-ROUPA</h1>
     
     <form class="form-control" name="form" novalidate>
         <input type="text" ng-model="ctrl.clothing.name" 
@@ -17,7 +17,7 @@
             ng-options="sector as sector.name for sector in ctrl.sectors">
         </select>
         
-        <button class="btn btn-primary form-group" 
+        <button class="btn btn-secondary form-group" 
             ng-click="ctrl.addClothing()"
             ng-disabled="!form.$valid">Adicionar</button> 
     </form>

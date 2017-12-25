@@ -2,16 +2,23 @@
     <div class="col-12">
         <h1>MEUS LOOKS</h1>
     </div>
-    
     <!-- mannequin -->
-    <div class="col-6 mannequin" style="z-index: -1;">
+    <div class="col-6 mannequin">
+        <div class="float-right">
+            <img src="assets/icons/thumbs-up.svg" style="width: 1rem"
+                    ng-click="ctrl.removeClothing(bodyPosition,clothing)" />
+            <img src="assets/icons/trash.svg" style="width: 1rem"
+                    ng-click="ctrl.removeClothing(bodyPosition,clothing)" />
+        </div>
+        
         <div ng-repeat="bodyPosition in ctrl.BODY_POSITIONS"
-            class="form-control mannequin-body mannequin-{{bodyPosition.name}}" 
+            class="mannequin-body mannequin-{{bodyPosition.name}}" 
             ng-class="{'mannequin-body-drop-allowed' : bodyPosition.allowsDrop}"
             ng-drop="true"
-            ng-drop-success="ctrl.onDropComplete(bodyPosition,$data,$event)"> 
-            
-            <div ng-repeat="clothing in bodyPosition.clothes track by $index">
+            ng-drop-success="ctrl.onDropComplete(bodyPosition,$data,$event)">
+             
+            <div ng-repeat="clothing in bodyPosition.clothes track by $index" 
+                class="form-control form-group">
                 {{clothing.name}}
             </div>
         </div>
