@@ -1,6 +1,5 @@
 package vidias.virtualcloset.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /*
  * travel cases
@@ -24,18 +25,19 @@ import javax.persistence.Table;
 public class ClosetClothing {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VC_CLOSET_CLOTHING_SEQ")
-    @SequenceGenerator(sequenceName = "VC_CLOSET_CLOTHING_SEQ", name = "VC_CLOSET_CLOTHING_SEQ")
+    @SequenceGenerator(sequenceName = "VC_CLOSET_CLOTHING_SEQ", name = "VC_CLOSET_CLOTHING_SEQ", allocationSize = 1)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne
     @JoinColumn
+    @JsonBackReference
     private Closet closet;
-
-    @ManyToOne(cascade = CascadeType.DETACH)
+    
+    @ManyToOne
     @JoinColumn
     private Clothing clothing;
 
-    @Column
+    @Column(name = "zindex")
     private Integer zIndex;
 
     public Long getId() {

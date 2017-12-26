@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-
 /**
  * Represents the categories of the clothes. Each clothing piece belongs to a
  * sector, and each sector occupies one or more body positions. For example, the
@@ -51,7 +49,6 @@ public class Sector {
      * Indicates whether is optional to use a clothing piece in that section or not.
      */
     @Column
-    @Type(type = "numeric_boolean")
     private Boolean optional;
 
     /**
@@ -62,7 +59,6 @@ public class Sector {
      * topMost=true for Jackets and topMost=false for shirts.
      */
     @Column
-    @Type(type = "numeric_boolean")
     private Boolean topMost;
 
     public Long getId() {

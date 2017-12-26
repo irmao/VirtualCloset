@@ -2,7 +2,6 @@ package vidias.virtualcloset.model;
 
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,14 +13,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Type;
-
 @Entity
 @Table(name = "VC_CLOTHING")
 public class Clothing {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VC_CLOTHING_SEQ")
-    @SequenceGenerator(name = "VC_CLOTHING_SEQ", sequenceName = "VC_CLOTHING_SEQ")
+    @SequenceGenerator(name = "VC_CLOTHING_SEQ", sequenceName = "VC_CLOTHING_SEQ", allocationSize = 1)
     private Long id;
 
     @Column
@@ -31,7 +28,6 @@ public class Clothing {
     private String pictureUrl;
 
     @Column
-    @Type(type = "numeric_boolean")
     private Boolean fancy;
 
     @Column
@@ -43,11 +39,11 @@ public class Clothing {
     @Transient
     private Collection<Weather> weather;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne
     @JoinColumn
     private Sector sector;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne
     @JoinColumn
     private User user;
 

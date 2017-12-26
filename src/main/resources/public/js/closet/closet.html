@@ -1,15 +1,22 @@
 <div ng-init="ctrl.init()" class="row">
-    <div class="col-12">
-        <h1>MEUS LOOKS</h1>
+    <div class="col-12" ng-if="ctrl.createNew">
+        <h1>NOVO LOOK</h1>
+        <span ng-click="ctrl.init(false)">Fechar</span>
     </div>
+    
+    <div class="col-12" ng-if="!ctrl.createNew">
+        <h1>MEUS LOOKS</h1>
+        <span ng-click="ctrl.init(true)">Criar novo</span>
+    </div>
+    
     <!-- mannequin -->
     <div class="col-6 mannequin">
-        <div class="float-right">
-            <img src="assets/icons/thumbs-up.svg" style="width: 1rem"
-                    ng-click="ctrl.removeClothing(bodyPosition,clothing)" />
-            <img src="assets/icons/trash.svg" style="width: 1rem"
-                    ng-click="ctrl.removeClothing(bodyPosition,clothing)" />
-        </div>
+        <img src="assets/icons/thumbs-up.svg" class="float-left" style="width: 1rem"
+               ng-click="ctrl.saveCloset()" 
+               ng-if="ctrl.createNew" />
+        <img src="assets/icons/trash.svg" class="float-right" style="width: 1rem"
+               ng-click="ctrl.removeClothing()" 
+               ng-if="ctrl.createNew" />
         
         <div ng-repeat="bodyPosition in ctrl.BODY_POSITIONS"
             class="mannequin-body mannequin-{{bodyPosition.name}}" 
@@ -24,12 +31,20 @@
         </div>
     </div>
     
+    <!-- used to drag n drop work -->
     <div ng-drag-clone class="form-control form-group">
         {{ctrl.clonedData.name}}
     </div>
     
+    <!-- list of closets -->
+    <div class="col-6 mannequin-sidebar" ng-if="!ctrl.createNew">
+        <div ng-repeat="closet in ctrl.closets" class="form-control form-group">
+            {{::closet.name}}
+        </div>
+    </div>
+    
     <!-- list of clothes -->
-    <div class="col-6 mannequin-sidebar">
+    <div class="col-6 mannequin-sidebar" ng-if="ctrl.createNew">
 	    <div ng-repeat="sector in ctrl.sectors">
             <h4  ng-if="ctrl.clothes[sector.id].length > 0">{{::sector.name}}</h4>
             <div ng-if="ctrl.clothes[sector.id].length > 0" 

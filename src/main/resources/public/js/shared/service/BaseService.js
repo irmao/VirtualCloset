@@ -13,6 +13,10 @@ function BaseService(RequestService, toaster) {
 		toaster.pop('error', 'Erro', error);
 	};
 	
+	self.addedWithSuccess = function() {
+		toaster.pop('success', 'Adicionado com sucesso');
+	}
+	
 	self.get = function(api, successFn) {
 		self.promise = RequestService.performRequest('GET', self.baseAPI + api);
 		
@@ -26,6 +30,7 @@ function BaseService(RequestService, toaster) {
 		
 		self.promise.then((response) => {
 			successFn(response)
+			self.addedWithSuccess();
 		}, self.defaultFailureCallback);
 	}
 }

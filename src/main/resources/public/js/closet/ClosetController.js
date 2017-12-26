@@ -2,9 +2,9 @@
 
 angular.module('virtualcloset').controller('ClosetController', ClosetController);
 
-ClosetController.$inject = [ 'ClosetService', 'SectorService', 'ClothesService' ];
+ClosetController.$inject = [ 'ClosetService', 'SectorService', 'ClothesService', '$uibModal', '$controller' ];
 
-function ClosetController(ClosetService, SectorService, ClothesService) {
+function ClosetController(ClosetService, SectorService, ClothesService, $uibModal, $controller) {
 	var self = this;
 	
 	self.BODY_POSITIONS = [
@@ -14,10 +14,27 @@ function ClosetController(ClosetService, SectorService, ClothesService) {
 		{name: 'FOOT', clothes: []}
 	];
 	
-	self.init = function() {
-		self.loadSectors();
+	self.init = function(_createNew) {
+		self.createNew = _createNew ? true : false;
+		
+		if (self.createNew) {
+			self.loadSectors();
+			
+		} else {
+			self.loadClosets();	
+		}
+		
+		
 		self.clearDropAllowed();
+		self.removeClothing();
 	}
+	
+	self.loadClosets = function() {
+		ClosetService.get((response) => {
+			self.closets = response.data;
+		});
+	}
+	
 	
 	self.loadSectors = function() {
 		SectorService.get((response) => {
@@ -59,6 +76,45 @@ function ClosetController(ClosetService, SectorService, ClothesService) {
 					bp.allowsDrop = true;
 				}
 			});
+		});
+	}
+	
+	self.saveCloset = function() {
+		var modalInstance = $uibModal.open({
+	      animation: true,
+	      templateUrl: 'js/shared/save-name-modal/save-name-modal.html',
+	      controllerAs: 'modalCtrl',
+	      controller: function($uibModalInstance) {
+	    	var self = this;	    		
+	    	self.modalTitle = 'Salvar look';
+	    	self.save = () => { $uibModalInstance.close(self.name); }
+	    	self.cancel = () => { $uibModalInstance.dismiss('cancel'); }
+	      }
+	    });
+		
+		modalInstance.result.then((closetName) => {
+			self.executeSave(closetName);
+		}, () => { /* cancel action: none */ });
+  	}
+	
+	self.executeSave = function(closetName) {
+		let closetObj = {
+			name: closetName,
+			bodyPositionOverlap: false,
+			closetClothing: []
+		};
+		
+		self.BODY_POSITIONS.forEach((b) => {
+			b.clothes.forEach((c) => {
+				closetObj.closetClothing.push({
+					zIndex: 0,
+					clothing: c
+				});
+			});
+		});
+		
+		ClosetService.post(closetObj, () => {
+			self.init(false);
 		});
 	}
 	

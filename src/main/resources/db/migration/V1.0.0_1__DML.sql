@@ -1,12 +1,12 @@
-insert into vc_sector values(1, 'Chapéu', 1, 1);
-insert into vc_sector values(2, 'Camisa', 1, 0);
-insert into vc_sector values(3, 'Calça', 1, 1);
-insert into vc_sector values(4, 'Short', 1, 1);
-insert into vc_sector values(5, 'Vestido', 1, 1);
-insert into vc_sector values(6, 'Saia', 1, 1);
-insert into vc_sector values(7, 'Sapato', 1, 1);
-insert into vc_sector values(8, 'Meia-calça', 1, 0);
-insert into vc_sector values(9, 'Blusa', 1, 1);
+insert into vc_sector values(1, 'Chapéu', true, true);
+insert into vc_sector values(2, 'Camisa', true, false);
+insert into vc_sector values(3, 'Calça', true, true);
+insert into vc_sector values(4, 'Short', true, true);
+insert into vc_sector values(5, 'Vestido', true, true);
+insert into vc_sector values(6, 'Saia', true, true);
+insert into vc_sector values(7, 'Sapato', true, true);
+insert into vc_sector values(8, 'Meia-calça', true, false);
+insert into vc_sector values(9, 'Blusa', true, true);
 
 insert into vc_sector_body_position values(1, 'HEAD');
 insert into vc_sector_body_position values(2, 'TOP');

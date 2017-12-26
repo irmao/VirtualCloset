@@ -1,0 +1,22 @@
+<div class="modal-demo">
+    <div class="modal-header" id="modal-title">
+        <h3>{{::modalCtrl.modalTitle}}</h3>
+    </div>
+    
+    <form name="form" novalidate>
+	    <div class="modal-body" id="modal-body">
+	        <div class="form-group">
+	           <label>Nome:</label>
+	           <input type="text" ng-model="modalCtrl.name" required/>
+	        </div>
+	    </div>
+	    
+	    <div class="modal-footer">
+	        <button class="btn btn-secondary" ng-disabled="!form.$valid"
+	           ng-click="modalCtrl.save()">Salvar</button>
+	        <button class="btn btn-secondary" ng-click="modalCtrl.cancel()">Cancelar</button>
+	    </div>
+    </form>
+    
+    
+</div>

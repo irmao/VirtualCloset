@@ -10,13 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /*
  * travel cases
@@ -31,7 +30,7 @@ import org.hibernate.annotations.Type;
 public class Closet {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VC_CLOSET_SEQ")
-    @SequenceGenerator(sequenceName = "VC_CLOSET_SEQ", name = "VC_CLOSET_SEQ")
+    @SequenceGenerator(sequenceName = "VC_CLOSET_SEQ", name = "VC_CLOSET_SEQ", allocationSize = 1)
     private Long id;
 
     @Column
@@ -44,14 +43,13 @@ public class Closet {
     private Date endDate;
 
     @Column
-    @Type(type = "numeric_boolean")
     private Boolean bodyPositionOverlap;
 
-    @JoinTable(name = "VC_CLOSET_CLOTHING", joinColumns = @JoinColumn(name = "CLOSET_ID", referencedColumnName = "ID"))
-    @ManyToMany(cascade = CascadeType.DETACH)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "closet")
+    @JsonManagedReference
     private Collection<ClosetClothing> closetClothing;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne
     @JoinColumn
     private User user;
 

@@ -3,6 +3,7 @@ package vidias.virtualcloset.service;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -13,6 +14,7 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vidias.virtualcloset.helper.TimeFunctions;
 import vidias.virtualcloset.model.BodyPosition;
 import vidias.virtualcloset.model.Closet;
 import vidias.virtualcloset.model.ClosetClothing;
@@ -26,27 +28,41 @@ public class ClosetService {
     @Autowired
     private ClosetRepository closetRepository;
 
+    @Autowired
     private SectorService sectorService;
 
-    public Collection<Closet> getByUserId(Long userId) {
-        return closetRepository.findByUserId(userId);
+    @Autowired
+    private UserService userService;
+
+    public Collection<Closet> getAll() {
+        return closetRepository.findByUserId(userService.getCurrentUser().getId());
+    }
+    
+    public Closet save(Closet closet) {
+        validate(closet);
+
+        closet.setUser(userService.getCurrentUser());
+        
+        if (closet.getId() == null) {
+            closet.setStartDate(TimeFunctions.localDateToDate(LocalDate.now()));
+        }
+        
+        closet.getClosetClothing().forEach(c -> c.setCloset(closet));
+
+        return closetRepository.save(closet);
     }
 
-    public boolean isClosetValid(Closet closet) {
-        boolean closetValid = true;
-
+    public void validate(Closet closet) {
         // check if all non-optional sectors are filled
         if (!allNonOptionalSectorsAllFilled(closet)) {
-            closetValid = false;
+            throw new IllegalArgumentException("Non optional sectors missing");
         }
 
         // check if there is no clothing on top a a clothing that is marked
         // as 'topMost'. But only checks if the closet doesn't allow any overlapping
-        else if (!closet.getBodyPositionOverlap() && isThereForbiddenOverlap(closet)) {
-            closetValid = false;
+        if (!closet.getBodyPositionOverlap() && isThereForbiddenOverlap(closet)) {
+            throw new IllegalArgumentException("Forbidden clothing overlap");
         }
-
-        return closetValid;
     }
 
     /**
