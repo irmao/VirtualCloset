@@ -118,6 +118,20 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 		});
 	}
 	
+	self.loadCloset = function(closet) {
+		self.removeClothing();
+		
+		closet.closetClothing.forEach((cc) => {
+			let bodyPosition = cc.clothing.sector.bodyPositions[0];
+			
+			self.BODY_POSITIONS.forEach((b) => {
+				if (b.name === bodyPosition)  {
+					b.clothes.push(cc.clothing);
+				}
+			}); 
+		});		
+	}
+	
 	self.removeClothing = function() {
 		self.BODY_POSITIONS.forEach((b) => {
 			b.clothes = [];

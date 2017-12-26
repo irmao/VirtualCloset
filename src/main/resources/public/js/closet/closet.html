@@ -38,7 +38,7 @@
     
     <!-- list of closets -->
     <div class="col-6 mannequin-sidebar" ng-if="!ctrl.createNew">
-        <div ng-repeat="closet in ctrl.closets" class="form-control form-group">
+        <div ng-repeat="closet in ctrl.closets" class="form-control form-group" ng-click="ctrl.loadCloset(closet)">
             {{::closet.name}}
         </div>
     </div>
