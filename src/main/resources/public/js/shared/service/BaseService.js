@@ -13,8 +13,8 @@ function BaseService(RequestService, toaster) {
 		toaster.pop('error', 'Erro', error);
 	};
 	
-	self.addedWithSuccess = function() {
-		toaster.pop('success', 'Adicionado com sucesso');
+	self.successMessage = function(message) {
+		toaster.pop('success', message);
 	}
 	
 	self.get = function(api, successFn) {
@@ -30,7 +30,16 @@ function BaseService(RequestService, toaster) {
 		
 		self.promise.then((response) => {
 			successFn(response)
-			self.addedWithSuccess();
+			self.successMessage('Adicionado com sucesso!');
+		}, self.defaultFailureCallback);
+	}
+	
+	self.delete = function(api, id, successFn) {
+		self.promise = RequestService.performRequest('DELETE', self.baseAPI + api, [id], undefined);
+		
+		self.promise.then((response) => {
+			successFn(response);
+			self.successMessage('Removido com sucesso!');
 		}, self.defaultFailureCallback);
 	}
 }

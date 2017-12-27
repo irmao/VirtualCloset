@@ -4,6 +4,7 @@
         <img src="assets/icons/arrow-left.svg" class="vc-icon" ng-click="ctrl.backButtonClick()" />
         <span class="vc-navbar-text" ng-if="!ctrl.createNew">MEUS LOOKS</span>
         <span class="vc-navbar-text" ng-if="ctrl.createNew">CRIAR LOOK</span>
+        <img src="assets/icons/trash.svg" class="vc-icon" ng-click="ctrl.deleteClosetLoaded()" ng-if="ctrl.closetLoaded" />
         <img src="assets/icons/plus.svg" class="vc-icon" ng-click="ctrl.init(true)" ng-if="!ctrl.createNew" />
         <img src="assets/icons/check.svg" class="vc-icon" ng-click="ctrl.saveCloset()" ng-if="ctrl.createNew" />
         <img src="assets/icons/undo-arrow.svg" class="vc-icon" ng-click="ctrl.removeClothing()" ng-if="ctrl.createNew" />
@@ -33,7 +34,8 @@
 	    
 	    <!-- list of closets -->
 	    <div class="col-6 mannequin-sidebar" ng-if="!ctrl.createNew">
-	        <div ng-repeat="closet in ctrl.closets" class="form-control form-group" ng-click="ctrl.loadCloset(closet)">
+	        <div ng-repeat="closet in ctrl.closets" class="form-control form-group" 
+	           ng-click="ctrl.loadCloset(closet)" ng-class="{'bg-light': ctrl.closetLoaded && ctrl.closetLoaded.id === closet.id}">
 	            {{::closet.name}}
 	        </div>
 	    </div>

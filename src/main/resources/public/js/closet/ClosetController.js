@@ -138,13 +138,17 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 					b.clothes.push(cc.clothing);
 				}
 			}); 
-		});		
+		});
+		
+		self.closetLoaded = closet;
 	}
 	
 	self.removeClothing = function() {
 		self.BODY_POSITIONS.forEach((b) => {
 			b.clothes = [];
 		});
+		
+		self.closetLoaded = null;
 	}
 	
 	self.clearDropAllowed = function() {
@@ -155,5 +159,27 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 		self.clonedData = {
 			name: ''
 		};
+	}
+	
+	self.deleteClosetLoaded = function() {
+		let parentController = self;
+		
+		var modalInstance = $uibModal.open({
+	      animation: true,
+	      templateUrl: 'js/shared/confirm-modal/confirm-modal.html',
+	      controllerAs: 'modalCtrl',
+	      controller: function($uibModalInstance) {
+	    	var self = this;	    		
+	    	self.modalTitle = 'Deseja mesmo remover o look "' + parentController.closetLoaded.name + '"?';
+	    	self.yes = () => { $uibModalInstance.close(parentController.closetLoaded.id); }
+	    	self.no  = () => { $uibModalInstance.dismiss('cancel'); }
+	      }
+	    });
+		
+		modalInstance.result.then((idToDelete) => {
+			ClosetService.delete(idToDelete, () => {
+				self.init(false);
+			});
+		}, () => { /* cancel action: none */ });
 	}
 }

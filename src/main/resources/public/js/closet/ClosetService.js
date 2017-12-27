@@ -10,4 +10,5 @@ function ClosetService(BaseService) {
 	
 	self.get  = (fn) => BaseService.get(self.api, fn);
 	self.post = (obj, fn) => BaseService.post(self.api, obj, fn);
+	self.delete = (id, fn) => BaseService.delete(self.api, id, fn);
 }

@@ -52,6 +52,16 @@ public class ClosetService {
         return closetRepository.save(closet);
     }
 
+    public void delete(Long closetId) {
+        Closet closet = closetRepository.findOne(closetId);
+        
+        if (closet == null) {
+            throw new IllegalArgumentException("Id " + closetId + " not found");
+        }
+        
+        closetRepository.delete(closet);
+    }
+
     public void validate(Closet closet) {
         // check if all non-optional sectors are filled
         if (!allNonOptionalSectorsAllFilled(closet)) {
@@ -123,4 +133,5 @@ public class ClosetService {
         }
 
     }
+
 }
