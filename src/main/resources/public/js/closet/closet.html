@@ -15,14 +15,19 @@
 	    <div class="col-6 mannequin">
 	        
 	        <div ng-repeat="bodyPosition in ctrl.BODY_POSITIONS"
-	            class="mannequin-body mannequin-{{bodyPosition.name}}" 
-	            ng-class="{'mannequin-body-drop-allowed' : bodyPosition.allowsDrop}"
+	            class="mannequin-{{bodyPosition.name}}" 
+	            ng-class="{'mannequin-allowed' : bodyPosition.allowsDrop}"
 	            ng-drop="true"
 	            ng-drop-success="ctrl.onDropComplete(bodyPosition,$data,$event)">
 	             
-	            <div ng-repeat="clothing in bodyPosition.clothes track by $index" 
-	                class="form-control form-group">
-	                {{clothing.name}}
+	            <div 
+	               ng-repeat="closetClothing in bodyPosition.closetClothings | orderBy: 'zIndex' track by $index" 
+	                class="form-control">
+	                {{closetClothing.clothing.name}}
+	                <div class="float-right" style="font-size: 0.6rem">
+	                   <img src="assets/icons/zindex.svg" style="width: 0.6rem;" />{{closetClothing.zIndex}}
+	                </div>
+	                
 	            </div>
 	        </div>
 	    </div>

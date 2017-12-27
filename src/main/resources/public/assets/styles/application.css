@@ -38,8 +38,7 @@ body {
     min-height: 6rem;
 }
 
-.mannequin,
-.mannequin-body {
+.mannequin {
   display: block;
   width: 100%;
   padding: 0.375rem 0.75rem;
@@ -49,7 +48,7 @@ body {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
-.mannequin-body-drop-allowed {
+.mannequin-drop-allowed {
 	border: 2px solid #0d0;
 }
 
@@ -64,13 +63,6 @@ body {
 
 .mannequin {
   background: url("/assets/icons/mannequin.png") no-repeat top center;
-}
-
-.mannequin-body {
-  background-color: transparent;
-  width: 40%;
-  min-width: 70px;
-  margin-left: 30%;
 }
 
 .mannequin-HEAD {

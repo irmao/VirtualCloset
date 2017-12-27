@@ -8,10 +8,10 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 	var self = this;
 	
 	self.BODY_POSITIONS = [
-		{name: 'HEAD', clothes: []}, 
-		{name: 'TOP', clothes: []},
-		{name: 'BOTTOM', clothes: []},
-		{name: 'FOOT', clothes: []}
+		{name: 'HEAD', closetClothings: []}, 
+		{name: 'TOP', closetClothings: []},
+		{name: 'BOTTOM', closetClothings: []},
+		{name: 'FOOT', closetClothings: []}
 	];
 	
 	self.init = function(_createNew) {
@@ -64,7 +64,11 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 	
 	self.onDropComplete = function(bodyPosition, clothing, evt) {
 		if (clothing.sector.bodyPositions.indexOf(bodyPosition.name) >= 0) {
-			bodyPosition.clothes.push(clothing);
+			let closetClothing = {
+				clothing: clothing,
+				zIndex: bodyPosition.closetClothings.length
+			};
+			bodyPosition.closetClothings.push(closetClothing);
 		}
 		self.clearDropAllowed();
 	}
@@ -114,11 +118,8 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 		};
 		
 		self.BODY_POSITIONS.forEach((b) => {
-			b.clothes.forEach((c) => {
-				closetObj.closetClothing.push({
-					zIndex: 0,
-					clothing: c
-				});
+			b.closetClothings.forEach((cc) => {
+				closetObj.closetClothing.push(cc);
 			});
 		});
 		
@@ -135,7 +136,7 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 			
 			self.BODY_POSITIONS.forEach((b) => {
 				if (b.name === bodyPosition)  {
-					b.clothes.push(cc.clothing);
+					b.closetClothings.push(cc);
 				}
 			}); 
 		});
@@ -145,7 +146,7 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 	
 	self.removeClothing = function() {
 		self.BODY_POSITIONS.forEach((b) => {
-			b.clothes = [];
+			b.closetClothings = [];
 		});
 		
 		self.closetLoaded = null;
