@@ -1,7 +1,11 @@
+<meta charset="utf-8" />
+
 <div class="modal-demo">
     <div class="modal-header" id="modal-title">
         <h5>{{::modalCtrl.modalTitle}}</h5>
     </div>
+    
+    <div ng-if="modalCtrl.modalMessage">{{::modalCtrl.modalMessage}}</div>
     
     <div class="modal-footer">
         <button class="btn btn-secondary" ng-click="modalCtrl.yes()">Sim</button>

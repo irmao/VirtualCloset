@@ -3,6 +3,7 @@ package vidias.virtualcloset.controller;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,5 +35,10 @@ public class ClothingController {
     @RequestMapping(method = RequestMethod.POST)
     public void addClothing(@RequestBody Clothing clothing) {
         clothingService.save(clothing);
+    }
+    
+    @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
+    public void deleteCloset(@PathVariable Long id) {
+        clothingService.delete(id);
     }
 }

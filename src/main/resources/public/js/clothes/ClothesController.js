@@ -2,9 +2,9 @@
 
 angular.module('virtualcloset').controller('ClothesController', ClothesController);
 
-ClothesController.$inject = [ 'ClothesService', 'SectorService' ];
+ClothesController.$inject = [ 'ClothesService', 'SectorService', '$uibModal' ];
 
-function ClothesController(ClothesService, SectorService) {
+function ClothesController(ClothesService, SectorService, $uibModal) {
 	var self = this;
 	
 	self.FANCY_OPTIONS = [
@@ -38,6 +38,27 @@ function ClothesController(ClothesService, SectorService) {
 	
 	self.addClothing = function() {
 		ClothesService.post(self.clothing, self.init);
+	}
+	
+	self.removeClothing = function(clothing) {
+		var modalInstance = $uibModal.open({
+	      animation: true,
+	      templateUrl: 'js/shared/confirm-modal/confirm-modal.html',
+	      controllerAs: 'modalCtrl',
+	      controller: function($uibModalInstance) {
+	    	var self = this;	    		
+	    	self.modalTitle = 'Deseja mesmo remover a linda roupa "' + clothing.name + '"?';
+	    	self.modalMessage = 'Cuidado: ao remover essa peça de roupa, todos os looks que a utilizam também serão removidos';
+	    	self.yes = () => { $uibModalInstance.close(); }
+	    	self.no  = () => { $uibModalInstance.dismiss('cancel'); }
+	      }
+	    });
+		
+		modalInstance.result.then(() => {
+			ClothesService.delete(clothing.id, () => {
+				self.init();
+			});
+		}, () => { /* cancel action: none */ });
 	}
 
 }

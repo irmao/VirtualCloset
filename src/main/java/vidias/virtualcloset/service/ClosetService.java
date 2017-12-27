@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import vidias.virtualcloset.model.Sector;
 import vidias.virtualcloset.repository.ClosetRepository;
 
 @Service
+@Transactional
 public class ClosetService {
 
     @Autowired
@@ -132,6 +135,11 @@ public class ClosetService {
             return o2.getzIndex().compareTo(o1.getzIndex());
         }
 
+    }
+
+    public void deleteAllClosetsUsingClothing(Clothing clothing) {
+        Collection<Closet> closets = closetRepository.findByClothingId(clothing.getId());
+        closetRepository.delete(closets);
     }
 
 }

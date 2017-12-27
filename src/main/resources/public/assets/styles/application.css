@@ -38,6 +38,11 @@ body {
     min-height: 6rem;
 }
 
+.card-title {
+	margin-right: 0.75rem;
+	margin-left: 0.75rem;
+}
+
 .mannequin {
   display: block;
   width: 100%;

@@ -18,4 +18,9 @@ public interface ClosetRepository extends CrudRepository<Closet, Long> {
 
     @Query("select c from Closet c where c.user.id = :userId")
     public Collection<Closet> findByUserId(@Param("userId") Long userId);
+
+    @Query("select distinct c from Closet c, ClosetClothing cc where "
+            + "cc member of c.closetClothing and "
+            + "cc.clothing.id = :clothingId")
+    public Collection<Closet> findByClothingId(@Param("clothingId") Long clothingId);
 }
