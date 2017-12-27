@@ -16,7 +16,7 @@
 	        
 	        <div ng-repeat="bodyPosition in ctrl.BODY_POSITIONS"
 	            class="mannequin-{{bodyPosition.name}}" 
-	            ng-class="{'mannequin-allowed' : bodyPosition.allowsDrop}"
+	            ng-class="{'mannequin-drop-allowed' : bodyPosition.allowsDrop}"
 	            ng-drop="true"
 	            ng-drop-success="ctrl.onDropComplete(bodyPosition,$data,$event)">
 	             
