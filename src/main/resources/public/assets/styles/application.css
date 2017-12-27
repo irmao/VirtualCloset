@@ -10,6 +10,8 @@ body {
   padding: 1.25rem;
   width: 100%;
   height: 100%;
+  background: url("/assets/icons/fancy.png") no-repeat #eee right bottom;
+  background-size: 25%;
 }
 
 .card,
@@ -27,18 +29,13 @@ body {
     -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
-    background-color: #fff8dc;
+    background-color: #eee;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
     margin: 1.25rem;
     padding-top: 0.75rem;
     float: left;  
     min-height: 6rem;
-}
-
-.card-fancy {
-    background: url("/assets/icons/fancy.png") no-repeat #FFFF99 right bottom;
-    background-size: 25%;
 }
 
 .mannequin,
@@ -90,4 +87,19 @@ body {
 
 .mannequin-FOOT {
   height: 70px;
+}
+
+.navbar {
+  margin-bottom: 1rem;
+}
+
+
+.vc-navbar-text {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+
+img.vc-icon {
+	width: 1rem;
 }

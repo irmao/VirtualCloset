@@ -1,5 +1,9 @@
 <div ng-init="ctrl.init()">
-    <h1>MEU GUARDA-ROUPA</h1>
+    <nav class="navbar navbar-light bg-dark">
+        <img src="assets/icons/arrow-left.svg" class="vc-icon" ui-sref="home" />
+        <span class="vc-navbar-text">MEU GUARDA-ROUPAS</span>
+        <span></span>
+    </nav>
     
     <form class="form-control" name="form" novalidate>
         <input type="text" ng-model="ctrl.clothing.name" 

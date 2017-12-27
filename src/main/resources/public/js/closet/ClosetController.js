@@ -2,9 +2,9 @@
 
 angular.module('virtualcloset').controller('ClosetController', ClosetController);
 
-ClosetController.$inject = [ 'ClosetService', 'SectorService', 'ClothesService', '$uibModal', '$controller' ];
+ClosetController.$inject = [ 'ClosetService', 'SectorService', 'ClothesService', '$uibModal', '$state' ];
 
-function ClosetController(ClosetService, SectorService, ClothesService, $uibModal, $controller) {
+function ClosetController(ClosetService, SectorService, ClothesService, $uibModal, $state) {
 	var self = this;
 	
 	self.BODY_POSITIONS = [
@@ -51,6 +51,15 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 				}); 
 			});
 		});
+	}
+	
+	self.backButtonClick = function() {
+		if (self.createNew) {
+			self.init(false);
+			
+		} else {
+			$state.go('home');
+		}
 	}
 	
 	self.onDropComplete = function(bodyPosition, clothing, evt) {
