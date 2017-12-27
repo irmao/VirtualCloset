@@ -5,6 +5,7 @@
         <span class="vc-navbar-text" ng-if="!ctrl.createNew">MEUS LOOKS</span>
         <span class="vc-navbar-text" ng-if="ctrl.createNew">CRIAR LOOK</span>
         <img src="assets/icons/trash.svg" class="vc-icon" ng-click="ctrl.deleteClosetLoaded()" ng-if="ctrl.closetLoaded" />
+        <img src="assets/icons/light-bulb.svg" class="vc-icon" ng-click="ctrl.generateRandomCloset()" ng-if="!ctrl.createNew" />
         <img src="assets/icons/plus.svg" class="vc-icon" ng-click="ctrl.init(true)" ng-if="!ctrl.createNew" />
         <img src="assets/icons/check.svg" class="vc-icon" ng-click="ctrl.saveCloset()" ng-if="ctrl.createNew" />
         <img src="assets/icons/undo-arrow.svg" class="vc-icon" ng-click="ctrl.removeClothing()" ng-if="ctrl.createNew" />

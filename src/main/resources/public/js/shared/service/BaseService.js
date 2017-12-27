@@ -25,6 +25,14 @@ function BaseService(RequestService, toaster) {
 		}, self.defaultFailureCallback);
 	}
 	
+	self.getOne = function(api, id, successFn) {
+		self.promise = RequestService.performRequest('GET', self.baseAPI + api, [id], undefined);
+		
+		self.promise.then((response) => {
+			successFn(response);
+		}, self.defaultFailureCallback);
+	}
+	
 	self.post = function(api, obj, successFn) {
 		self.promise = RequestService.performRequest('POST', self.baseAPI + api, undefined, obj);
 		

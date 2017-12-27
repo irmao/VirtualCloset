@@ -183,4 +183,10 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 			});
 		}, () => { /* cancel action: none */ });
 	}
+	
+	self.generateRandomCloset = function() {
+		ClosetService.getRandom((response) => {
+			self.loadCloset(response.data);
+		});
+	}
 }
