@@ -11,4 +11,5 @@ function ClothesService(BaseService) {
 	self.get  = (fn) => BaseService.get(self.api, fn);
 	self.post = (obj, fn) => BaseService.post(self.api, obj, fn);
 	self.delete = (id, fn) => BaseService.delete(self.api, id, fn);
+	self.put = (id, obj, fn) => BaseService.put(self.api, id, obj, fn);
 }

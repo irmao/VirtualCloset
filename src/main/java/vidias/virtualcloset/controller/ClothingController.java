@@ -36,9 +36,14 @@ public class ClothingController {
     public void addClothing(@RequestBody Clothing clothing) {
         clothingService.save(clothing);
     }
-    
+
     @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
-    public void deleteCloset(@PathVariable Long id) {
+    public void deleteClothing(@PathVariable Long id) {
         clothingService.delete(id);
+    }
+
+    @RequestMapping(path = "{id}", method = RequestMethod.PUT)
+    public void updateCloset(@PathVariable Long id, @RequestBody Clothing clothing) {
+        clothingService.update(id, clothing);
     }
 }

@@ -29,7 +29,7 @@
     <!-- SHOW clothes section -->
     <div ng-class="{'card-fancy': clothing.fancy, 'card': !clothing.fancy}" ng-repeat="clothing in ctrl.clothes | orderBy: 'sector.id' : true">
       <div class="card-title">
-        <img src="assets/icons/pencil.svg" class="float-left vc-icon" ng-click="ctrl.editClothing()"/>
+        <img src="assets/icons/pencil.svg" class="float-left vc-icon" ng-click="ctrl.editClothing(clothing)"/>
         <img src="assets/icons/trash-black.svg" class="float-right vc-icon" ng-click="ctrl.removeClothing(clothing)"/>
         <h4>{{::clothing.name}}</h4>
       </div>

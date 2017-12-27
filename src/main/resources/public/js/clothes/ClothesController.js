@@ -60,5 +60,27 @@ function ClothesController(ClothesService, SectorService, $uibModal) {
 			});
 		}, () => { /* cancel action: none */ });
 	}
-
+	
+	self.editClothing = function(clothing) {
+		var modalInstance = $uibModal.open({
+	      animation: true,
+	      templateUrl: 'js/shared/save-name-modal/save-name-modal.html',
+	      controllerAs: 'modalCtrl',
+	      controller: function($uibModalInstance) {
+	    	var self = this;	    		
+	    	self.modalTitle = 'Alterar nome';
+	    	self.save = () => { $uibModalInstance.close(self.name); }
+	    	self.cancel = () => { $uibModalInstance.dismiss('cancel'); }
+	      }
+	    });
+		
+		modalInstance.result.then((newName) => {
+			let newClothing = angular.copy(clothing);
+			newClothing.name = newName;
+			
+			ClothesService.put(newClothing.id, newClothing, () => {
+				self.init();
+			});
+		}, () => { /* cancel action: none */ });
+	}
 }

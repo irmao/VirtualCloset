@@ -42,4 +42,13 @@ function BaseService(RequestService, toaster) {
 			self.successMessage('Removido com sucesso!');
 		}, self.defaultFailureCallback);
 	}
+	
+	self.put = function(api, id, obj, successFn) {
+		self.promise = RequestService.performRequest('PUT', self.baseAPI + api, [id], obj);
+		
+		self.promise.then((response) => {
+			successFn(response);
+			self.successMessage('Alterado com sucesso!');
+		}, self.defaultFailureCallback);
+	}
 }

@@ -47,4 +47,15 @@ public class ClothingService {
         closetService.deleteAllClosetsUsingClothing(clothing);
         clothingRepository.delete(clothing);
     }
+
+    public Clothing update(Long clothingId, Clothing newClothing) {
+        Clothing clothing = clothingRepository.findOne(clothingId);
+        
+        if (clothing == null) {
+            throw new IllegalArgumentException("Id " + clothingId + " not found");
+        }
+        
+        newClothing.setId(clothingId);
+        return clothingRepository.save(newClothing);
+    }
 }
