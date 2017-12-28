@@ -1,10 +1,13 @@
 package vidias.virtualcloset.service;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -14,6 +17,7 @@ import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vidias.virtualcloset.dto.RandomGeneratorOptions;
 import vidias.virtualcloset.exception.InvalidClosetException;
 import vidias.virtualcloset.exception.RandomGeneratorException;
 import vidias.virtualcloset.helper.Constants;
@@ -29,7 +33,7 @@ public class RandomClosetService {
     @Autowired
     private ClothingService clothingService;
 
-    public Closet generateRandomCloset() {
+    public Closet generateRandomCloset(RandomGeneratorOptions generatorOptions) {
         Closet closet = new Closet();
         closet.setClosetClothing(new ArrayList<>());
 
@@ -37,7 +41,7 @@ public class RandomClosetService {
 
         Collection<BodyPosition> mandatoryBodyPositions = BodyPosition.getMandatoryBodyPositions();
 
-        Map<BodyPosition, ArrayList<Clothing>> clothesByBodyPosition = getClothesByBodyPosition();
+        Map<BodyPosition, ArrayList<Clothing>> clothesByBodyPosition = getClothesByBodyPosition(generatorOptions);
 
         Set<BodyPosition> occupiedBodyPositions = new HashSet<>();
 
@@ -49,17 +53,17 @@ public class RandomClosetService {
 
                 Clothing clothing = null;
                 try {
-                    clothing = getRandomClothing(random, clothes, occupiedBodyPositions);    
+                    clothing = getRandomClothing(random, clothes, occupiedBodyPositions);
                 } catch (RandomGeneratorException e) {
                     // try again next round
                     System.err.println(e);
                 }
-                
+
                 if (clothing != null) {
                     ClosetClothing closetClothing = new ClosetClothing(
                             getRandomClothing(random, clothes, occupiedBodyPositions), 0);
                     closet.getClosetClothing().add(closetClothing);
-                    occupiedBodyPositions.addAll(closetClothing.getClothing().getSector().getBodyPositions());    
+                    occupiedBodyPositions.addAll(closetClothing.getClothing().getSector().getBodyPositions());
                 }
             }
 
@@ -80,11 +84,14 @@ public class RandomClosetService {
         return clothes.get(index);
     }
 
-    Map<BodyPosition, ArrayList<Clothing>> getClothesByBodyPosition() {
+    Map<BodyPosition, ArrayList<Clothing>> getClothesByBodyPosition(RandomGeneratorOptions generatorOptions) {
         Map<BodyPosition, ArrayList<Clothing>> clothesByBodyPosition = new HashMap<>();
 
+        List<Clothing> allClothes = clothingService.getAll().stream()
+                .filter(c -> generatorOptions.getFancy().equals(c.getFancy())).collect(toList());
+
         for (BodyPosition bodyPosition : BodyPosition.getMandatoryBodyPositions()) {
-            ArrayList<Clothing> clothesInThatBodyPosition = new ArrayList<>(clothingService.getAll().stream()
+            ArrayList<Clothing> clothesInThatBodyPosition = new ArrayList<>(allClothes.stream()
                     .filter(c -> c.getSector().getBodyPositions().contains(bodyPosition)).collect(Collectors.toList()));
 
             if (clothesInThatBodyPosition.isEmpty()) {

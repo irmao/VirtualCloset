@@ -4,7 +4,8 @@
  * Registers the application modules
  */
 angular.module('virtualcloset', ['cgBusy', 'ui.router', 
-	'isteven-multi-select', 'toaster', 'ngDraggable', 'ngAnimate', 'ui.bootstrap']);
+	'isteven-multi-select', 'toaster', 'ngDraggable', 'ngAnimate', 'ui.bootstrap',
+	'ngMaterial']);
 
 //configure cgBusy component for application
 angular.module('virtualcloset').value('cgBusyDefaults', {

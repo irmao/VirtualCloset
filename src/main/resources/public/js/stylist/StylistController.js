@@ -10,6 +10,7 @@ function StylistController(ClosetService) {
 	self.BODY_POSITIONS = angular.copy(ClosetService.BODY_POSITIONS);
 	
 	self.init = function() {
+		self.isFancy = false;
 	}
 	
 	self.saveCloset = function() {
@@ -73,7 +74,11 @@ function StylistController(ClosetService) {
 	}
 	
 	self.generateRandomCloset = function() {
-		ClosetService.getRandom((response) => {
+		let options = {
+			fancy: self.isFancy	
+		};
+		
+		ClosetService.getRandom(options, (response) => {
 			self.loadCloset(response.data);
 		});
 	}

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import vidias.virtualcloset.dto.RandomGeneratorOptions;
 import vidias.virtualcloset.model.Closet;
 import vidias.virtualcloset.service.ClosetService;
 import vidias.virtualcloset.service.RandomClosetService;
@@ -38,8 +39,8 @@ public class ClosetController {
 
     @RequestMapping("random")
     @ResponseBody
-    public Closet getRandomCloset() {
-        return randomClosetService.generateRandomCloset();
+    public Closet getRandomCloset(RandomGeneratorOptions options) {
+        return randomClosetService.generateRandomCloset(options);
     }
 
     @RequestMapping(method = RequestMethod.POST)

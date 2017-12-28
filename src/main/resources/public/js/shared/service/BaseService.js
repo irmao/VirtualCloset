@@ -32,8 +32,14 @@ function BaseService(RequestService, toaster) {
 		}, self.defaultFailureCallback);
 	}
 	
-	self.getOne = function(api, id, successFn) {
-		self.promise = RequestService.performRequest('GET', self.baseAPI + api, [id], undefined);
+	self.getOne = function(api, id, queryString, successFn) {
+		let params = id;
+		
+		if (queryString) {
+			params += queryString;
+		}
+		
+		self.promise = RequestService.performRequest('GET', self.baseAPI + api, [params], undefined);
 		
 		self.promise.then((response) => {
 			successFn(response);
