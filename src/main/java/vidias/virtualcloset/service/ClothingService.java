@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vidias.virtualcloset.exception.NotFoundException;
+import vidias.virtualcloset.helper.Constants;
 import vidias.virtualcloset.model.Clothing;
 import vidias.virtualcloset.repository.ClothingRepository;
 
@@ -16,7 +18,7 @@ public class ClothingService {
 
     @Autowired
     private ClothingRepository clothingRepository;
-    
+
     @Autowired
     private ClosetService closetService;
 
@@ -36,25 +38,25 @@ public class ClothingService {
 
         return clothingRepository.save(clothing);
     }
-    
+
     public void delete(Long clothingId) {
         Clothing clothing = clothingRepository.findOne(clothingId);
-        
+
         if (clothing == null) {
-            throw new IllegalArgumentException("Id " + clothingId + " not found");
+            throw new NotFoundException(Constants.OBJECT_NOT_FOUND_MESSAGE);
         }
-        
+
         closetService.deleteAllClosetsUsingClothing(clothing);
         clothingRepository.delete(clothing);
     }
 
     public Clothing update(Long clothingId, Clothing newClothing) {
         Clothing clothing = clothingRepository.findOne(clothingId);
-        
+
         if (clothing == null) {
-            throw new IllegalArgumentException("Id " + clothingId + " not found");
+            throw new NotFoundException(Constants.OBJECT_NOT_FOUND_MESSAGE);
         }
-        
+
         newClothing.setId(clothingId);
         return clothingRepository.save(newClothing);
     }

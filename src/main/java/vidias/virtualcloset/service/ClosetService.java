@@ -16,6 +16,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vidias.virtualcloset.exception.InvalidClosetException;
+import vidias.virtualcloset.exception.NotFoundException;
+import vidias.virtualcloset.helper.Constants;
 import vidias.virtualcloset.helper.TimeFunctions;
 import vidias.virtualcloset.model.BodyPosition;
 import vidias.virtualcloset.model.Closet;
@@ -59,7 +62,7 @@ public class ClosetService {
         Closet closet = closetRepository.findOne(closetId);
         
         if (closet == null) {
-            throw new IllegalArgumentException("Id " + closetId + " not found");
+            throw new NotFoundException(Constants.OBJECT_NOT_FOUND_MESSAGE);
         }
         
         closetRepository.delete(closet);
@@ -68,13 +71,13 @@ public class ClosetService {
     public void validate(Closet closet) {
         // check if all non-optional sectors are filled
         if (!allNonOptionalSectorsAllFilled(closet)) {
-            throw new IllegalArgumentException("Non optional sectors missing");
+            throw new InvalidClosetException(Constants.NON_OPTIONAL_SECTORS_MISSING_MESSAGE);
         }
 
         // check if there is no clothing on top a a clothing that is marked
         // as 'topMost'. But only checks if the closet doesn't allow any overlapping
         if (!closet.getBodyPositionOverlap() && isThereForbiddenOverlap(closet)) {
-            throw new IllegalArgumentException("Forbidden clothing overlap");
+            throw new InvalidClosetException(Constants.FORBIDDEN_CLOTHES_OVERLAP_MESSAGE);
         }
     }
 

@@ -10,7 +10,14 @@ function BaseService(RequestService, toaster) {
 	self.baseAPI = "api/";
 	
 	self.defaultFailureCallback = (error) => {
-		toaster.pop('error', 'Erro', error);
+		if (error.data && error.data.length) {
+			error.data.forEach((e) => {
+				toaster.pop('error', 'Erro', e);	
+			});
+		} else {
+			toaster.pop('error', 'Erro', error);	
+		}
+		
 	};
 	
 	self.successMessage = function(message) {
