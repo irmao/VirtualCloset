@@ -39,6 +39,15 @@ public class ClosetClothing {
 
     @Column(name = "zindex")
     private Integer zIndex;
+    
+    public ClosetClothing() {
+        // jpa requires empty constructor
+    }
+    
+    public ClosetClothing(Clothing clothing, Integer zIndex) {
+        setClothing(clothing);
+        setzIndex(zIndex);
+    }
 
     public Long getId() {
         return id;
