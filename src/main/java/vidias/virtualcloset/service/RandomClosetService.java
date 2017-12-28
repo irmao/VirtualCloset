@@ -59,6 +59,7 @@ public class RandomClosetService {
                 if (anyRandomInt.isPresent()) {
                     ClosetClothing closetClothing = new ClosetClothing();
                     closetClothing.setClothing(clothes.get(anyRandomInt.getAsInt()));
+                    closetClothing.setzIndex(0);
                     closet.getClosetClothing().add(closetClothing);
                     occupiedBodyPositions.addAll(closetClothing.getClothing().getSector().getBodyPositions());
                 }

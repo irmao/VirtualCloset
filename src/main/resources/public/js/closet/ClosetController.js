@@ -7,12 +7,7 @@ ClosetController.$inject = [ 'ClosetService', 'SectorService', 'ClothesService',
 function ClosetController(ClosetService, SectorService, ClothesService, $uibModal, $state) {
 	var self = this;
 	
-	self.BODY_POSITIONS = [
-		{name: 'HEAD', closetClothings: []}, 
-		{name: 'TOP', closetClothings: []},
-		{name: 'BOTTOM', closetClothings: []},
-		{name: 'FOOT', closetClothings: []}
-	];
+	self.BODY_POSITIONS = angular.copy(ClosetService.BODY_POSITIONS);
 	
 	self.init = function(_createNew) {
 		self.createNew = _createNew ? true : false;
@@ -182,11 +177,5 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 				self.init(false);
 			});
 		}, () => { /* cancel action: none */ });
-	}
-	
-	self.generateRandomCloset = function() {
-		ClosetService.getRandom((response) => {
-			self.loadCloset(response.data);
-		});
 	}
 }

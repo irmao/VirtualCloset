@@ -1,0 +1,30 @@
+<div ng-init="ctrl.init()">
+
+    <nav class="navbar navbar-light bg-dark">
+        <img src="assets/icons/arrow-left.svg" class="vc-icon" ui-sref="home" />
+        <span class="vc-navbar-text">MINHA PERSONAL STYLIST</span>
+    </nav>
+    
+    <div class="row col-12">
+	    <!-- mannequin -->
+	    <div class="col-6 mannequin">
+	        <div ng-repeat="bodyPosition in ctrl.BODY_POSITIONS"
+	            class="mannequin-{{bodyPosition.name}}">
+	            <div 
+	               ng-repeat="closetClothing in bodyPosition.closetClothings | orderBy: 'zIndex' track by $index" 
+	                class="form-control">
+	                {{closetClothing.clothing.name}}
+	                <div class="float-right" style="font-size: 0.6rem">
+	                   <img src="assets/icons/zindex.svg" style="width: 0.6rem;" />{{closetClothing.zIndex}}
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    
+	    <!-- Random options -->
+	    <div class="col-6">
+		    <button class="btn btn-secondary" ng-click="ctrl.generateRandomCloset()">Escolher roupa</button>
+	    </div>
+	    
+    </div>
+</div>
