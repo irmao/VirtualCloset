@@ -12,10 +12,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import vidias.virtualcloset.dto.RandomGeneratorOptions;
 import vidias.virtualcloset.exception.InvalidClosetException;
@@ -26,13 +24,18 @@ import vidias.virtualcloset.model.Closet;
 import vidias.virtualcloset.model.ClosetClothing;
 import vidias.virtualcloset.model.Clothing;
 
-@Service
-public class RandomClosetService {
-    private static final int MAX_TRIES = 1000;
+public abstract class RandomClosetService {
+    protected static final int MAX_TRIES = 1000;
 
     @Autowired
     private ClothingService clothingService;
 
+    /**
+     * Generate a random closet based in the given generation options
+     * 
+     * @param generatorOptions
+     * @return
+     */
     public Closet generateRandomCloset(RandomGeneratorOptions generatorOptions) {
         Closet closet = new Closet();
         closet.setClosetClothing(new ArrayList<>());
@@ -76,14 +79,25 @@ public class RandomClosetService {
         return closet;
     }
 
-    Clothing getRandomClothing(Random random, ArrayList<Clothing> clothes, Set<BodyPosition> occupiedBodyPositions)
-            throws RandomGeneratorException {
-        IntStream randomInts = random.ints(0, clothes.size());
-        int index = randomInts.limit(MAX_TRIES).filter(i -> fit(clothes.get(i), occupiedBodyPositions)).findAny()
-                .orElseThrow(() -> new RandomGeneratorException(Constants.SOMETHING_WRONG_RANDOM_MESSAGE));
-        return clothes.get(index);
-    }
+    /**
+     * Returns a random clothing of the given collection of clothes. The returned
+     * clothing does not occupy a body position that is already occupied
+     * 
+     * @param random
+     * @param clothes
+     * @param occupiedBodyPositions
+     * @return
+     * @throws RandomGeneratorException
+     */
+    public abstract Clothing getRandomClothing(Random random, ArrayList<Clothing> clothes, Set<BodyPosition> occupiedBodyPositions);
 
+    /**
+     * Returns a map containing all body positions that are required to have clothes
+     * on and the list of all clothes that can go in each body position
+     * 
+     * @param generatorOptions
+     * @return
+     */
     Map<BodyPosition, ArrayList<Clothing>> getClothesByBodyPosition(RandomGeneratorOptions generatorOptions) {
         Map<BodyPosition, ArrayList<Clothing>> clothesByBodyPosition = new HashMap<>();
 
