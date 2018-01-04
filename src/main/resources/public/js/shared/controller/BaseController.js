@@ -2,7 +2,7 @@
 
 angular.module('virtualcloset').controller('BaseController', BaseController);
 
-HomeController.$inject = [ 'BaseService' ];
+BaseController.$inject = [ 'BaseService' ];
 
 function BaseController(BaseService) {
 	var self = this;

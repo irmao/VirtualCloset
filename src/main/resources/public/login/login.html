@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  
+  <head>  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+  
+    <!-- Bootstrap required scripts -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+     <link rel="stylesheet" href="../assets/styles/application.css">
+     
+     <script>
+	    function loadCsrf() {
+	        jQuery.get('/csrf', function(data) {
+	            jQuery("#hdn_csrf")[0].value = data.token;
+	        });
+	    }
+    </script>
+  </head>
+  
+  <body onload="loadCsrf();">
+    <nav class="navbar navbar-light bg-dark">
+        <span class="vc-navbar-text" style="width: 100%; text-align: center;">ARMÁRIO DA VANESSA</span>
+    </nav>
+    
+    <form name="form" class="form-group form-control col-12" action="/processLogin" method="post">
+      <input type="text" name="username" class="form-control form-group" placeholder="Usuário" required />
+      <input type="password" name="password" class="form-control form-group" placeholder="Senha" />
+      <input type="submit" name="submit" class="btn btn-secondary col-12" value="Entrar" />
+      <input name="_csrf" type="hidden" id="hdn_csrf" />
+    </form>
+  </body>
+</html>

@@ -1,7 +1,11 @@
 package vidias.virtualcloset.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +28,17 @@ public class User {
 
     @Column
     private String email;
-
+    
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    
+    @Column
+    private Boolean active;
+    
+    @Column
+    private Date passwordExpirationDate;
+    
     public Long getId() {
         return id;
     }
@@ -55,6 +69,30 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Date getPasswordExpirationDate() {
+        return passwordExpirationDate;
+    }
+
+    public void setPasswordExpirationDate(Date passwordExpirationDate) {
+        this.passwordExpirationDate = passwordExpirationDate;
     }
 
 }
