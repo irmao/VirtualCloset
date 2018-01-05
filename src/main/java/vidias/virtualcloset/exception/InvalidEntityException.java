@@ -2,17 +2,17 @@ package vidias.virtualcloset.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class InvalidClosetException extends VirtualClosetException {
+public class InvalidEntityException extends VirtualClosetException {
 
     /**
      * serialVersionUID
      */
     private static final long serialVersionUID = -843645434571093378L;
 
-    public InvalidClosetException() {
+    public InvalidEntityException() {
     }
     
-    public InvalidClosetException(String message) {
+    public InvalidEntityException(String message) {
         super(message);
     }
 

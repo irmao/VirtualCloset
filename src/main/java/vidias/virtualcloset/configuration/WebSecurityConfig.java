@@ -49,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .logout()
+                .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
             .csrf()
@@ -90,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery("select name, password, active from vc_user where name = ?")
                 .authoritiesByUsernameQuery("select name, " + "case "
                         + "when password_expiration_date is not null and password_expiration_date <= current_timestamp then '"
-                        + Role.NONE.name() + "' " + "else role " + "end " + "from vc_user where name = ?")
+                        + Role.NONE.name() + "' " + "else role " + "end " + "from vc_user where name = lower(?)")
                 .passwordEncoder(passwordEncoder);
     }
 }

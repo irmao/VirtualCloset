@@ -1,5 +1,7 @@
 package vidias.virtualcloset.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import vidias.virtualcloset.model.User;
@@ -11,5 +13,6 @@ import vidias.virtualcloset.model.User;
  *
  */
 public interface UserRepository extends CrudRepository<User, Long> {
-    
+    public List<User> findByName(String name);
+    public List<User> findByEmail(String email);
 }

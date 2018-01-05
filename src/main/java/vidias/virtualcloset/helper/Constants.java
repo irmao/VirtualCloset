@@ -9,6 +9,12 @@ public class Constants {
     public static final String OBJECT_NOT_FOUND_MESSAGE = "Objeto não encontrado";
     public static final String SOMETHING_WRONG_RANDOM_MESSAGE = "Não foi possível achar uma combinação por motivos desconhecidos";
 
+    public static final String INVALID_USERNAME_MESSAGE = "Nome de usuário deve conter apenas letras minúsculas e números. Também deve ter entre 3 e 60 caracteres";
+    public static final String INVALID_PASSWORD_MESSAGE = "Senha deve ter entre 8 e 60 caracteres";
+    public static final String INVALID_EMAIL_MESSAGE = "É necessário colocar um email";
+    public static final String USERNAME_ALREADY_EXISTS_MESSAGE = "Esse nome de usuário já existe";
+    public static final String EMAIL_ALREADY_EXISTS_MESSAGE = "Esse email já existe";
+    
     public static String generateMissingClothingForMessage(BodyPosition bodyPosition) {
         String bodyPositionName = "";
 

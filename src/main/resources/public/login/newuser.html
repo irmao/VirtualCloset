@@ -1,0 +1,13 @@
+<nav class="navbar navbar-light bg-dark">
+    <img src="/assets/icons/arrow-left.svg" class="vc-icon" ui-sref="/login" />
+    <span class="vc-navbar-text">NOVO USUÁRIO</span>
+    <span></span>
+</nav>
+
+<form name="form" class="form-group form-control col-12">
+    <input type="text" ng-model="ctrl.username" class="form-control form-group" placeholder="Nome de usuário" required />
+    <input type="password" ng-model="ctrl.password" class="form-control form-group" placeholder="Senha" required />
+    <input type="password" ng-model="ctrl.repeatPassword" class="form-control form-group" placeholder="Senha de novo" required />
+    <input type="text" ng-model="ctrl.email" class="form-control form-group" placeholder="Email" required />
+    <button class="btn btn-secondary col-12" ng-click="ctrl.createNewUser()" ng-disabled="!form.$valid">Criar</button>
+</form>

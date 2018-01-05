@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import vidias.virtualcloset.dto.RandomGeneratorOptions;
-import vidias.virtualcloset.exception.InvalidClosetException;
+import vidias.virtualcloset.exception.InvalidEntityException;
 import vidias.virtualcloset.exception.RandomGeneratorException;
 import vidias.virtualcloset.helper.Constants;
 import vidias.virtualcloset.model.BodyPosition;
@@ -109,7 +109,7 @@ public abstract class RandomClosetService {
                     .filter(c -> c.getSector().getBodyPositions().contains(bodyPosition)).collect(Collectors.toList()));
 
             if (clothesInThatBodyPosition.isEmpty()) {
-                throw new InvalidClosetException(Constants.generateMissingClothingForMessage(bodyPosition));
+                throw new InvalidEntityException(Constants.generateMissingClothingForMessage(bodyPosition));
             }
 
             clothesByBodyPosition.put(bodyPosition, clothesInThatBodyPosition);

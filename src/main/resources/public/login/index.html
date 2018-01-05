@@ -30,23 +30,16 @@
     
     <!-- Application scripts -->
     <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="app.route.js"></script>
     <script type="text/javascript" src="LoginController.js"></script>
+    <script type="text/javascript" src="NewUserController.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/styles/application.css">
   </head>
   
-  <body ng-controller="LoginController as ctrl" cg-busy="ctrl.getPromise()" ng-init="ctrl.init()">
+  <body>
     <toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
-    
-    <nav class="navbar navbar-light bg-dark">
-        <span class="vc-navbar-text" style="width: 100%; text-align: center;">ARMÁRIO DA VANESSA</span>
-    </nav>
-    
-    <form name="form" class="form-group form-control col-12">
-      <input type="text" ng-model="ctrl.username" class="form-control form-group" placeholder="Usuário" required />
-      <input type="password" ng-model="ctrl.password" class="form-control form-group" placeholder="Senha" />
-      <button class="btn btn-secondary col-12" ng-click="ctrl.postCredentials()">Entrar</button>
-    </form>
+    <div ui-view></div>
   </body>
 </html>
