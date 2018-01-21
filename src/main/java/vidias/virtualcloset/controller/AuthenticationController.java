@@ -1,5 +1,7 @@
 package vidias.virtualcloset.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +18,16 @@ import vidias.virtualcloset.service.UserService;
  *
  */
 @RestController
-@RequestMapping("/login/api")
-public class LoginController {
-    
+@RequestMapping("/api/authentication")
+public class AuthenticationController {
+
     @Autowired
     private UserService userService;
+
+    @RequestMapping
+    public Principal getUser(Principal user) {
+        return user;
+    }
 
     @RequestMapping(value = "newuser", method = RequestMethod.POST)
     public void createNewUser(@RequestBody User user) {

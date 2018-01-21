@@ -15,6 +15,8 @@ public class Constants {
     public static final String USERNAME_ALREADY_EXISTS_MESSAGE = "Esse nome de usuário já existe";
     public static final String EMAIL_ALREADY_EXISTS_MESSAGE = "Esse email já existe";
     
+    public static final String USERNAME_OR_PASSWORD_INVALID_MESSAGE = "Nome de usuário ou senha inválidos";
+    
     public static String generateMissingClothingForMessage(BodyPosition bodyPosition) {
         String bodyPositionName = "";
 

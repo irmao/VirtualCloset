@@ -1,0 +1,12 @@
+<nav class="navbar navbar-light bg-dark">
+    <span class="vc-navbar-text" style="width: 100%; text-align: center;">ARMÁRIO DA VANESSA</span>
+</nav>
+    
+<form name="form" class="form-group form-control col-12" ng-init="ctrl.init()">
+	<input type="text" ng-model="ctrl.credentials.username" class="form-control form-group" placeholder="Usuário" required />
+	<input type="password" ng-model="ctrl.credentials.password" class="form-control form-group" placeholder="Senha" />
+	<button class="btn btn-secondary col-12" ng-click="ctrl.login()">Entrar</button>
+	<div>
+        <a ui-sref="/newuser">Criar novo usuário</a>
+	</div>
+</form>

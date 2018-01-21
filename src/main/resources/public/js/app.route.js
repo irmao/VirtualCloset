@@ -34,5 +34,17 @@ function ConfigRouter($stateProvider, $urlRouterProvider) {
 			templateUrl: 'js/stylist/stylist.html',
 			controller: 'StylistController',
 			controllerAs: 'ctrl'
-		});
+		})
+		.state('/login', {
+			url: '/login',
+			templateUrl: '/js/login/login.html',
+			controller: 'LoginController',
+			controllerAs: 'ctrl'
+		})
+		.state('/newuser', {
+			url: '/newuser',
+			templateUrl: 'js/newuser/newuser.html',
+			controller: 'NewUserController',
+			controllerAs: 'ctrl'
+		});;
 }

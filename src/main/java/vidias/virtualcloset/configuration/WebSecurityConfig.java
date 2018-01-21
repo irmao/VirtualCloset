@@ -38,13 +38,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/csrf", "/lib/**", "/assets/**", "/login/**").permitAll()
+                .antMatchers("/csrf", "/lib/**", "/assets/**", "/favicon.ico", 
+                        "/js/**/*.js", "/js/login/login.html", "/js/newuser/newuser.html",
+                        "/api/authentication", "/api/authentication/*", "/login.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
-                .loginPage("/login/index.html")
-                .loginProcessingUrl("/login")
-                .successHandler(authenticationSuccessHandler())
+                .loginPage("/login.html")
+                .loginProcessingUrl("/api/authentication")
+//                .successHandler(authenticationSuccessHandler())
+                .defaultSuccessUrl("/")
                 .failureHandler(authenticationFailureHandler())
                 .permitAll()
                 .and()

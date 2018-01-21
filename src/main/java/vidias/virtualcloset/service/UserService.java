@@ -1,6 +1,7 @@
 package vidias.virtualcloset.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,9 @@ public class UserService {
     }
 
     public User getCurrentUser() {
-        return currentUser;
+        String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal()).getUsername();
+        return userRepository.findByName(username).iterator().next();
     }
 
     public User save(User user) {
