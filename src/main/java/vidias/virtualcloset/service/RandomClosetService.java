@@ -48,6 +48,9 @@ public abstract class RandomClosetService {
 
         Set<BodyPosition> occupiedBodyPositions = new HashSet<>();
 
+        Map<BodyPosition, List<ClosetClothing>> occupiedClothesByBodyPosition = new HashMap<>();
+        mandatoryBodyPositions.forEach(bp -> occupiedClothesByBodyPosition.put(bp, new ArrayList<ClosetClothing>()));
+
         int safeCounter = 0;
         while (occupiedBodyPositions.size() < mandatoryBodyPositions.size()) {
 
@@ -56,16 +59,23 @@ public abstract class RandomClosetService {
 
                 Clothing clothing = null;
                 try {
-                    clothing = getRandomClothing(random, clothes, occupiedBodyPositions);
+                    clothing = getRandomClothing(random, clothes, occupiedBodyPositions, closet);
                 } catch (RandomGeneratorException e) {
                     // try again next round
                     System.err.println(e);
                 }
 
                 if (clothing != null) {
-                    ClosetClothing closetClothing = new ClosetClothing(
-                            getRandomClothing(random, clothes, occupiedBodyPositions), 0);
+                    int zIndex = 0;
+                    for (BodyPosition bp : clothing.getSector().getBodyPositions()) {
+                        if (occupiedClothesByBodyPosition.get(bp).size() > zIndex) {
+                            zIndex = occupiedClothesByBodyPosition.get(bp).size();
+                        }
+                    }
+                    
+                    ClosetClothing closetClothing = new ClosetClothing(clothing, zIndex);
                     closet.getClosetClothing().add(closetClothing);
+                    clothing.getSector().getBodyPositions().forEach(bp -> occupiedClothesByBodyPosition.get(bp).add(closetClothing));
                     occupiedBodyPositions.addAll(closetClothing.getClothing().getSector().getBodyPositions());
                 }
             }
@@ -86,10 +96,11 @@ public abstract class RandomClosetService {
      * @param random
      * @param clothes
      * @param occupiedBodyPositions
+     * @param closet
      * @return
      * @throws RandomGeneratorException
      */
-    public abstract Clothing getRandomClothing(Random random, ArrayList<Clothing> clothes, Set<BodyPosition> occupiedBodyPositions);
+    public abstract Clothing getRandomClothing(Random random, ArrayList<Clothing> clothes, Set<BodyPosition> occupiedBodyPositions, Closet alreadyChosenClothes);
 
     /**
      * Returns a map containing all body positions that are required to have clothes

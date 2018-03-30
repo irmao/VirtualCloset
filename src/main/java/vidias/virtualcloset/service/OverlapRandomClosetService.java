@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import vidias.virtualcloset.exception.RandomGeneratorException;
 import vidias.virtualcloset.helper.Constants;
 import vidias.virtualcloset.model.BodyPosition;
+import vidias.virtualcloset.model.Closet;
 import vidias.virtualcloset.model.Clothing;
 
 @Service
@@ -21,12 +22,13 @@ public class OverlapRandomClosetService extends RandomClosetService {
      * @param random
      * @param clothes
      * @param occupiedBodyPositions
+     * @param closet
      * @return
      * @throws RandomGeneratorException
      */
     @Override
     public Clothing getRandomClothing(Random random, ArrayList<Clothing> clothes,
-            Set<BodyPosition> occupiedBodyPositions) throws RandomGeneratorException {
+            Set<BodyPosition> occupiedBodyPositions, Closet areadyChosenClothes) throws RandomGeneratorException {
         IntStream randomInts = random.ints(0, clothes.size());
         int index = randomInts.limit(MAX_TRIES).filter(i -> fit(clothes.get(i), occupiedBodyPositions)).findAny()
                 .orElseThrow(() -> new RandomGeneratorException(Constants.SOMETHING_WRONG_RANDOM_MESSAGE));

@@ -19,7 +19,7 @@ function StylistController(ClosetService) {
 	      templateUrl: 'js/shared/save-name-modal/save-name-modal.html',
 	      controllerAs: 'modalCtrl',
 	      controller: function($uibModalInstance) {
-	    	var self = this;	    		
+	    	var self = this;
 	    	self.modalTitle = 'Salvar look';
 	    	self.save = () => { $uibModalInstance.close(self.name); }
 	    	self.cancel = () => { $uibModalInstance.dismiss('cancel'); }
@@ -75,7 +75,7 @@ function StylistController(ClosetService) {
 	
 	self.generateRandomCloset = function() {
 		let options = {
-			fancy: self.isFancy	
+			fancy: self.isFancy
 		};
 		
 		ClosetService.getRandom(options, (response) => {
