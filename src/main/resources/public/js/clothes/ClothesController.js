@@ -21,6 +21,10 @@ function ClothesController(ClothesService, SectorService, $uibModal) {
 		
 		self.loadSectors();
 		self.loadClothes();
+		
+		self.filter = {
+		    sector: null
+		}
 	}
 	
 	self.loadClothes = function() {

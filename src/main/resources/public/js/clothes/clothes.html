@@ -5,7 +5,8 @@
         <span></span>
     </nav>
     
-    <form class="form-control" name="form" novalidate>
+    <form class="form-control" name="form" novalidate 
+    	style="margin-bottom: 10px;">
         <input type="text" ng-model="ctrl.clothing.name" 
             class="form-group form-control col-12 required" 
             placeholder="Nome"
@@ -27,12 +28,21 @@
     </form>
     
     <!-- SHOW clothes section -->
-    <div ng-class="{'card-fancy': clothing.fancy, 'card': !clothing.fancy}" ng-repeat="clothing in ctrl.clothes | orderBy: 'sector.id' : true">
-      <div class="card-title">
-        <img src="assets/icons/pencil.svg" class="float-left vc-icon" ng-click="ctrl.editClothing(clothing)"/>
-        <img src="assets/icons/trash-black.svg" class="float-right vc-icon" ng-click="ctrl.removeClothing(clothing)"/>
-        <h4>{{::clothing.name}}</h4>
-      </div>
-      {{::clothing.sector.name}}
-    </div>    
+    <form class="form-control" name="showClothesForm" novalidate>
+	    Exibir:
+	    <select class="form-control" ng-model="ctrl.filter.sector">
+	    	<option ng-value="null">Todos</option>
+	    	<option ng-repeat="sector in ctrl.sectors" ng-value="sector">{{sector.name}}</option>
+	    </select>
+
+    	<div ng-class="{'card-fancy': clothing.fancy, 'card': !clothing.fancy}" 
+    		ng-repeat="clothing in ctrl.clothes | filter: {sector: {id: ctrl.filter.sector.id}} | orderBy: 'sector.id' : true">
+	      	<div class="card-title">
+		        <img src="assets/icons/pencil.svg" class="float-left vc-icon" ng-click="ctrl.editClothing(clothing)"/>
+		        <img src="assets/icons/trash-black.svg" class="float-right vc-icon" ng-click="ctrl.removeClothing(clothing)"/>
+		        <h4>{{::clothing.name}}</h4>
+	      	</div>
+	      	{{::clothing.sector.name}}
+    	</div>
+	</form>    
 </div>
