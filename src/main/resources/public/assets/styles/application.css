@@ -43,6 +43,7 @@ body {
 	margin-left: 0.75rem;
 }
 
+.baggage,
 .mannequin {
   display: block;
   width: 100%;
@@ -53,21 +54,28 @@ body {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
+.baggage-drop-allowed,
 .mannequin-drop-allowed {
-	border: 2px solid #0d0;
+	border: 2px solid #0d0 !important;
 }
 
 .mannequin,
-.mannequin-sidebar {
+.mannequin-sidebar,
+.baggage-sidebar {
   height: 80vh;
 }
 
+.baggage-sidebar,
 .mannequin-sidebar {
   overflow-y: auto;
 }
 
 .mannequin {
   background: url("/assets/icons/mannequin.png") no-repeat top center;
+}
+
+.baggage {
+	border: 2px solid #ddd;
 }
 
 .mannequin-HEAD {

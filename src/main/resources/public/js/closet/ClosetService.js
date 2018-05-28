@@ -8,6 +8,9 @@ function ClosetService(BaseService) {
 	var self = this;
 	self.api = 'closet';
 	
+	self.CATEGORY_LOOK = 'LOOK';
+	self.CATEGORY_BAGGAGE = 'BAGGAGE';
+	
 	self.BODY_POSITIONS = [
 		{name: 'HEAD', closetClothings: []}, 
 		{name: 'TOP', closetClothings: []},
@@ -26,4 +29,7 @@ function ClosetService(BaseService) {
 		
 		return BaseService.getOne(self.api, 'random', params, fn);
 	}
+	
+	self.getLooks = (fn) => BaseService.get(self.api, fn, '?category='+self.CATEGORY_LOOK);
+	self.getBaggages = (fn) => BaseService.get(self.api, fn, '?category='+self.CATEGORY_BAGGAGE);
 }

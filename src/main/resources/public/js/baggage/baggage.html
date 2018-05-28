@@ -1,0 +1,60 @@
+<div ng-init="ctrl.init()">
+
+    <nav class="navbar navbar-light bg-dark">
+        <img src="assets/icons/arrow-left.svg" class="vc-icon" ng-click="ctrl.backButtonClick()" />
+        <span class="vc-navbar-text" ng-if="!ctrl.createNew">MINHAS MALAS</span>
+        <span class="vc-navbar-text" ng-if="ctrl.createNew">ARRUMAR MALA</span>
+        <img src="assets/icons/trash.svg" class="vc-icon" ng-click="ctrl.deleteClosetLoaded()" ng-if="ctrl.closetLoaded" />
+        <img src="assets/icons/plus.svg" class="vc-icon" ng-click="ctrl.init(true)" ng-if="!ctrl.createNew" />
+        <img src="assets/icons/check.svg" class="vc-icon" ng-click="ctrl.saveCloset()" ng-if="ctrl.createNew" />
+        <img src="assets/icons/undo-arrow.svg" class="vc-icon" ng-click="ctrl.removeClothing()" ng-if="ctrl.createNew" />
+    </nav>
+    
+    <div class="row col-12">
+	    <!-- baggage -->
+	    <div class="col-6 baggage" 
+	    	ng-class="{'baggage-drop-allowed' : ctrl.allowsDrop}"
+	    	ng-drop="true"
+            ng-drop-success="ctrl.onDropComplete(bodyPosition,$data,$event)">
+	        
+   			<div class="form-control" 
+   				ng-repeat="closetClothing in ctrl.currentClosetClothing track by $index"
+   				style="margin-bottom: 5px;">
+	            {{closetClothing.clothing.name}}	                
+            </div>
+	    </div>
+	    
+	    <!-- used to drag n drop work -->
+	    <div ng-drag-clone class="form-control form-group">
+	        {{ctrl.clonedData.name}}
+	    </div>
+	    
+	    <!-- list of closets -->
+	    <div class="col-6 baggage-sidebar" ng-if="!ctrl.createNew">
+	        <div ng-repeat="closet in ctrl.closets" class="form-control form-group" 
+	           ng-click="ctrl.loadCloset(closet)" 
+	           ng-class="{'bg-light': ctrl.closetLoaded && ctrl.closetLoaded.id === closet.id}">
+	           <img src="assets/icons/suitcase.png" alt="suitcase" style="height: 1.5rem;"/>
+	            {{::closet.name}}
+	        </div>
+	    </div>
+	    
+	    <!-- list of clothes -->
+	    <div class="col-6 baggage-sidebar" ng-if="ctrl.createNew">
+		    <div ng-repeat="sector in ctrl.sectors">
+	            <h4 ng-if="ctrl.clothes[sector.id].length > 0">{{::sector.name}}</h4>
+	            <div ng-if="ctrl.clothes[sector.id].length > 0" 
+	                ng-repeat="clothing in ctrl.clothes[sector.id] | orderBy: 'clothing.name' : false"  
+	                class="form-control form-group"
+	                ng-drag="true" 
+	                ng-drag-data="clothing"
+	                ng-drag-success="ctrl.onDragComplete($data,$event)"
+	                ng-drag-start="ctrl.onDragStart($data,$event)"
+	                ng-drag-stop="ctrl.onDragStop($data,$event)"
+	                ng-center-anchor="true">
+	                {{::clothing.name}}
+	            </div>
+	        </div>
+	    </div>
+    </div>
+</div>

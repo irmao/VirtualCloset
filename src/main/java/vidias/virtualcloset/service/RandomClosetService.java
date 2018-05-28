@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import vidias.virtualcloset.dto.RandomGeneratorOptions;
+import vidias.virtualcloset.dto.SearchClosetOptions;
 import vidias.virtualcloset.exception.InvalidEntityException;
 import vidias.virtualcloset.exception.RandomGeneratorException;
 import vidias.virtualcloset.helper.Constants;
@@ -36,7 +36,7 @@ public abstract class RandomClosetService {
      * @param generatorOptions
      * @return
      */
-    public Closet generateRandomCloset(RandomGeneratorOptions generatorOptions) {
+    public Closet generateRandomCloset(SearchClosetOptions generatorOptions) {
         Closet closet = new Closet();
         closet.setClosetClothing(new ArrayList<>());
 
@@ -109,7 +109,7 @@ public abstract class RandomClosetService {
      * @param generatorOptions
      * @return
      */
-    Map<BodyPosition, ArrayList<Clothing>> getClothesByBodyPosition(RandomGeneratorOptions generatorOptions) {
+    Map<BodyPosition, ArrayList<Clothing>> getClothesByBodyPosition(SearchClosetOptions generatorOptions) {
         Map<BodyPosition, ArrayList<Clothing>> clothesByBodyPosition = new HashMap<>();
 
         List<Clothing> allClothes = clothingService.getAll().stream()

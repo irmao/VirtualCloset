@@ -52,6 +52,9 @@ public class Closet {
     @ManyToOne
     @JoinColumn
     private User user;
+    
+    @Column
+    private String category;
 
     public Long getId() {
         return id;
@@ -108,4 +111,12 @@ public class Closet {
     public void setUser(User user) {
         this.user = user;
     }
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 }

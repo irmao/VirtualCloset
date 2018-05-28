@@ -16,8 +16,12 @@ import vidias.virtualcloset.model.Closet;
  */
 public interface ClosetRepository extends CrudRepository<Closet, Long> {
 
-    @Query("select c from Closet c where c.user.id = :userId")
+	@Query("select c from Closet c where c.user.id = :userId")
     public Collection<Closet> findByUserId(@Param("userId") Long userId);
+	
+	@Query("select c from Closet c where c.user.id = :userId and c.category = :category")
+    public Collection<Closet> findByUserIdAndCategory(@Param("userId") Long userId, 
+    		@Param("category") String category);
 
     @Query("select distinct c from Closet c, ClosetClothing cc where "
             + "cc member of c.closetClothing and "

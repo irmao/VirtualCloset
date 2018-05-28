@@ -24,8 +24,9 @@ function BaseService(RequestService, toaster) {
 		toaster.pop('success', message);
 	}
 	
-	self.get = function(api, successFn) {
-		self.promise = RequestService.performRequest('GET', self.baseAPI + api);
+	self.get = function(api, successFn, optionalQuery) {
+		self.promise = RequestService.performRequest('GET', self.baseAPI + api, 
+				optionalQuery ? [optionalQuery] : undefined, undefined);
 		
 		self.promise.then((response) => {
 			successFn(response)

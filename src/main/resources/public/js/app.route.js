@@ -29,6 +29,12 @@ function ConfigRouter($stateProvider, $urlRouterProvider) {
 			controller: 'ClosetController',
 			controllerAs: 'ctrl'
 		})
+		.state('baggage', {
+			url: '/baggage',
+			templateUrl: 'js/baggage/baggage.html',
+			controller: 'BaggageController',
+			controllerAs: 'ctrl'
+		})
 		.state('stylist', {
 			url: '/stylist',
 			templateUrl: 'js/stylist/stylist.html',

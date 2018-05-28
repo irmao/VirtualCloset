@@ -1,35 +1,32 @@
 'use strict';
 
-angular.module('virtualcloset').controller('ClosetController', ClosetController);
+angular.module('virtualcloset').controller('BaggageController', BaggageController);
 
-ClosetController.$inject = [ 'ClosetService', 'SectorService', 'ClothesService', '$uibModal', '$state' ];
+BaggageController.$inject = [ 'ClosetService', 'SectorService', 'ClothesService', '$uibModal', '$state' ];
 
-function ClosetController(ClosetService, SectorService, ClothesService, $uibModal, $state) {
+function BaggageController(ClosetService, SectorService, ClothesService, $uibModal, $state) {
 	var self = this;
-	
-	self.BODY_POSITIONS = angular.copy(ClosetService.BODY_POSITIONS);
 	
 	self.init = function(_createNew) {
 		self.createNew = _createNew ? true : false;
-		
+
 		if (self.createNew) {
-			self.loadSectors();
-			
+			self.loadSectors();			
 		} else {
 			self.loadClosets();	
 		}
 		
-		
 		self.clearDropAllowed();
 		self.removeClothing();
+		
+		self.currentClosetClothing = [];
 	}
 	
 	self.loadClosets = function() {
-		ClosetService.getLooks((response) => {
+		ClosetService.getBaggages((response) => {
 			self.closets = response.data;
 		});
 	}
-	
 	
 	self.loadSectors = function() {
 		SectorService.get((response) => {
@@ -58,33 +55,20 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 	}
 	
 	self.onDropComplete = function(bodyPosition, clothing, evt) {
-		if (clothing.sector.bodyPositions.indexOf(bodyPosition.name) >= 0) {
-			let closetClothing = {
-				clothing: clothing,
-				zIndex: bodyPosition.closetClothings.length
-			};
-			bodyPosition.closetClothings.push(closetClothing);
-		}
+		self.currentClosetClothing.push({
+			clothing: clothing,
+			zIndex: 0
+		});
 		self.clearDropAllowed();
 	}
 	
 	self.onDragStart = function(clothing, evt) {
-		self.allowDropPositions(clothing.sector.bodyPositions);
+		self.allowsDrop = true;
 		self.clonedData = clothing;
 	}
 	
 	self.onDragStop = function(data, evt) {
 		self.clearDropAllowed();
-	}
-	
-	self.allowDropPositions = function(bodyPositions) {
-		bodyPositions.forEach((b) => {
-			self.BODY_POSITIONS.forEach((bp) => {
-				if (b === bp.name) {
-					bp.allowsDrop = true;
-				}
-			});
-		});
 	}
 	
 	self.saveCloset = function() {
@@ -94,7 +78,7 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 	      controllerAs: 'modalCtrl',
 	      controller: function($uibModalInstance) {
 	    	var self = this;	    		
-	    	self.modalTitle = 'Salvar look';
+	    	self.modalTitle = 'Salvar mala';
 	    	self.save = () => { $uibModalInstance.close(self.name); }
 	    	self.cancel = () => { $uibModalInstance.dismiss('cancel'); }
 	      }
@@ -108,16 +92,10 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 	self.executeSave = function(closetName) {
 		let closetObj = {
 			name: closetName,
-			bodyPositionOverlap: false,
-			closetClothing: [],
-			category: ClosetService.CATEGORY_LOOK
+			bodyPositionOverlap: true,
+			closetClothing: self.currentClosetClothing,
+			category: ClosetService.CATEGORY_BAGGAGE
 		};
-		
-		self.BODY_POSITIONS.forEach((b) => {
-			b.closetClothings.forEach((cc) => {
-				closetObj.closetClothing.push(cc);
-			});
-		});
 		
 		ClosetService.post(closetObj, () => {
 			self.init(false);
@@ -126,32 +104,17 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 	
 	self.loadCloset = function(closet) {
 		self.removeClothing();
-		
-		closet.closetClothing.forEach((cc) => {
-			let bodyPosition = cc.clothing.sector.bodyPositions[0];
-			
-			self.BODY_POSITIONS.forEach((b) => {
-				if (b.name === bodyPosition)  {
-					b.closetClothings.push(cc);
-				}
-			}); 
-		});
-		
+		self.currentClosetClothing = closet.closetClothing;
 		self.closetLoaded = closet;
 	}
 	
 	self.removeClothing = function() {
-		self.BODY_POSITIONS.forEach((b) => {
-			b.closetClothings = [];
-		});
-		
 		self.closetLoaded = null;
+		self.currentClosetClothing = [];
 	}
 	
 	self.clearDropAllowed = function() {
-		self.BODY_POSITIONS.forEach((b) => {
-			b.allowsDrop = false;
-		});
+		self.allowsDrop = false;
 		
 		self.clonedData = {
 			name: ''
@@ -167,7 +130,7 @@ function ClosetController(ClosetService, SectorService, ClothesService, $uibModa
 	      controllerAs: 'modalCtrl',
 	      controller: function($uibModalInstance) {
 	    	var self = this;	    		
-	    	self.modalTitle = 'Deseja mesmo remover o look "' + parentController.closetLoaded.name + '"?';
+	    	self.modalTitle = 'Deseja mesmo remover a mala "' + parentController.closetLoaded.name + '"?';
 	    	self.yes = () => { $uibModalInstance.close(parentController.closetLoaded.id); }
 	    	self.no  = () => { $uibModalInstance.dismiss('cancel'); }
 	      }
