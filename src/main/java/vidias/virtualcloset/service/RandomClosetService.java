@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,14 +30,17 @@ public abstract class RandomClosetService {
 
     @Autowired
     private ClothingService clothingService;
+    
+    @Autowired
+    private ClosetService closetService;
 
     /**
      * Generate a random closet based in the given generation options
      * 
-     * @param generatorOptions
+     * @param searchClosetOptions
      * @return
      */
-    public Closet generateRandomCloset(SearchClosetOptions generatorOptions) {
+    public Closet generateRandomCloset(SearchClosetOptions searchClosetOptions) {
         Closet closet = new Closet();
         closet.setClosetClothing(new ArrayList<>());
 
@@ -44,7 +48,7 @@ public abstract class RandomClosetService {
 
         Collection<BodyPosition> mandatoryBodyPositions = BodyPosition.getMandatoryBodyPositions();
 
-        Map<BodyPosition, ArrayList<Clothing>> clothesByBodyPosition = getClothesByBodyPosition(generatorOptions);
+        Map<BodyPosition, ArrayList<Clothing>> clothesByBodyPosition = getClothesByBodyPosition(searchClosetOptions);
 
         Set<BodyPosition> occupiedBodyPositions = new HashSet<>();
 
@@ -106,14 +110,23 @@ public abstract class RandomClosetService {
      * Returns a map containing all body positions that are required to have clothes
      * on and the list of all clothes that can go in each body position
      * 
-     * @param generatorOptions
+     * @param searchClosetOptions
      * @return
      */
-    Map<BodyPosition, ArrayList<Clothing>> getClothesByBodyPosition(SearchClosetOptions generatorOptions) {
+    Map<BodyPosition, ArrayList<Clothing>> getClothesByBodyPosition(SearchClosetOptions searchClosetOptions) {
         Map<BodyPosition, ArrayList<Clothing>> clothesByBodyPosition = new HashMap<>();
 
-        List<Clothing> allClothes = clothingService.getAll().stream()
-                .filter(c -> generatorOptions.getFancy().equals(c.getFancy())).collect(toList());
+        // if searchClosetOptions.closetId exists, gets only the clothes present in that closet.
+        // otherwise, gets all the user's clothes.
+        Stream<Clothing> allClothesStream;
+
+        if (searchClosetOptions.getClosetId() != null) {
+        	allClothesStream = closetService.getById(searchClosetOptions.getClosetId()).getClosetClothing().stream().map(cc -> cc.getClothing());
+        } else {
+        	allClothesStream = clothingService.getAll().stream();
+        }
+
+        List<Clothing> allClothes = allClothesStream.filter(c -> searchClosetOptions.getFancy().equals(c.getFancy())).collect(toList());
 
         for (BodyPosition bodyPosition : BodyPosition.getMandatoryBodyPositions()) {
             ArrayList<Clothing> clothesInThatBodyPosition = new ArrayList<>(allClothes.stream()

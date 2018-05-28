@@ -26,7 +26,17 @@
 	        <md-switch ng-model="ctrl.isFancy" md-invert>
                 Chique
             </md-switch>
-            
+
+            <div class="row col-9" style="margin-bottom: 20px;">
+	            <img src="assets/icons/suitcase.png" 
+	            	alt="suitcase" style="height: calc(2.25rem + 2px); margin-right: 10px;" />
+	
+	            <select ng-model="ctrl.selectedBaggage" class="form-control col-6" style="float: left;">
+	            	<option ng-value="null">Todas as roupas</option>
+	            	<option ng-value="baggage.id" ng-repeat="baggage in ctrl.baggages">{{::baggage.name}}</option>
+	            </select>
+            </div>
+             
 		    <button class="btn btn-secondary" ng-click="ctrl.generateRandomCloset()">Escolher roupa</button>
 	    </div>
 	    

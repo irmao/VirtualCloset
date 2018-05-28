@@ -39,6 +39,10 @@ public class ClosetService {
 
 	@Autowired
 	private UserService userService;
+	
+	public Closet getById(Long closetId) {
+		return closetRepository.findOne(closetId);
+	}
 
 	public Collection<Closet> getByCategory(String category) {
 		return closetRepository.findByUserIdAndCategory(userService.getCurrentUser().getId(), category);

@@ -24,8 +24,13 @@ function ClosetService(BaseService) {
 	
 	self.getRandom = (options, fn) => {
 		let params = [];
-		let fancyStr = "?fancy=" + (options.fancy ? "true" : "false");
-		params.push(fancyStr);
+		let queryStr = "?fancy=" + (options.fancy ? "true" : "false");
+		
+		if (options.closetId) {
+			queryStr += "&closetId=" + options.closetId;
+		}
+		
+		params.push(queryStr);
 		
 		return BaseService.getOne(self.api, 'random', params, fn);
 	}

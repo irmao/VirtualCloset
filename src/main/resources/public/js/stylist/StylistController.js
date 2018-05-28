@@ -11,6 +11,11 @@ function StylistController(ClosetService) {
 	
 	self.init = function() {
 		self.isFancy = false;
+		self.selectedBaggage = null;
+		
+		ClosetService.getBaggages((response) => {
+			self.baggages = response.data;
+		});
 	}
 	
 	self.saveCloset = function() {
@@ -75,7 +80,8 @@ function StylistController(ClosetService) {
 	
 	self.generateRandomCloset = function() {
 		let options = {
-			fancy: self.isFancy
+			fancy: self.isFancy,
+			closetId: self.selectedBaggage
 		};
 		
 		ClosetService.getRandom(options, (response) => {
